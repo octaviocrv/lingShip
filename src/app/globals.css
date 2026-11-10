@@ -1,0 +1,239 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens da Lingship.
+ * Cores e fontes tiradas do tema do protótipo da Vanessa no SITE123
+ * (identidade/design-guide.md): fundo off-white, roxo como cor da marca,
+ * laranja nos botões, títulos em serifada Lora e corpo em Montserrat.
+ */
+@theme {
+  /* Cores da marca */
+  --color-ink: #2b2140; /* texto principal e títulos */
+  --color-muted: #5f5776; /* texto secundário */
+  --color-purple: #6d3fc0; /* cor principal da marca */
+  --color-purple-strong: #4c2a93; /* card em destaque, hover */
+  --color-violet: #7c3aed; /* subtítulo do logo */
+  --color-lilac: #f1e9fb; /* superfícies lilás, rodapé */
+  --color-surface: #f5effc; /* fundos de ícone e etiquetas */
+  --color-orange: #f97316; /* botões e destaques */
+  --color-orange-hover: #ea580c;
+  --color-orange-deep: #c2410c;
+  --color-cream: #fcfaf7; /* fundo da página */
+  --color-line: rgb(43 33 64 / 0.12);
+
+  /* Tipografia */
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-lora), ui-serif, Georgia, serif;
+  --font-logo: var(--font-playfair), ui-serif, Georgia, serif;
+
+  --text-display: clamp(2.6rem, 1.7rem + 3.6vw, 4.6rem);
+  --text-display--line-height: 1.04;
+  --text-display--letter-spacing: -0.015em;
+  --text-title: clamp(2rem, 1.5rem + 2vw, 3.2rem);
+  --text-title--line-height: 1.12;
+  --text-title--letter-spacing: -0.01em;
+  --text-eyebrow: 0.7rem;
+  --text-eyebrow--letter-spacing: 0.24em;
+
+  /* Forma e sombra */
+  --radius-card: 1.5rem;
+  --radius-panel: 2rem;
+  --shadow-soft: 0 22px 70px rgb(43 33 64 / 0.1);
+  --shadow-button: 0 16px 36px rgb(249 115 22 / 0.28);
+
+  /* Movimento */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-marquee: marquee 48s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  /* cards do hero subindo e descendo devagar */
+  @keyframes float {
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* Base */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    min-height: 100dvh;
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-purple);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-purple);
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Utilitários da marca */
+
+/* Card de vidro translúcido, como os cards do protótipo */
+@utility glass {
+  background: rgb(255 255 255 / 0.62);
+  border: 1px solid rgb(109 63 192 / 0.14);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Mesmo vidro, sem sombra (pílulas, faixa de atividades, acordeão fechado) */
+@utility glass-flat {
+  background: rgb(255 255 255 / 0.62);
+  border: 1px solid rgb(109 63 192 / 0.14);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Fundo da página com manchas suaves de lilás e pêssego */
+@utility bg-aura {
+  background-image:
+    radial-gradient(60rem 40rem at 100% 0%, rgb(109 63 192 / 0.08), transparent 60%),
+    radial-gradient(50rem 36rem at 0% 100%, rgb(249 115 22 / 0.06), transparent 60%);
+}
+
+/* Esconde a barra de rolagem nas faixas que deslizam na horizontal */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Máscara que esmaece as bordas da faixa de atividades */
+@utility fade-edges {
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+/*
+ * SCROLL REVEAL (mesmo sistema do ctramos.bh e do scooter-site).
+ *   data-reveal              sobe
+ *   data-reveal="zoom"       sobe pouco e cresce (fotos)
+ *   data-reveal="fade"       só aparece
+ *   data-reveal-group        cascata nos filhos
+ *   data-intro               animação de abertura da primeira dobra (CSS puro)
+ * O JS que marca [data-in] está em components/effects/reveal-observer.tsx.
+ */
+:root {
+  --reveal-distance: 24px;
+  --reveal-duration: 0.9s;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --reveal-distance: 36px;
+  }
+}
+
+.js :is([data-reveal], [data-reveal-group] > *) {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-distance), 0);
+  transition:
+    opacity var(--reveal-duration) var(--ease-out-expo),
+    transform var(--reveal-duration) var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.js :is([data-reveal="zoom"], [data-reveal-group="zoom"] > *) {
+  transform: translate3d(0, calc(var(--reveal-distance) * 0.5), 0) scale(0.95);
+}
+
+.js :is([data-reveal="fade"], [data-reveal-group="fade"] > *) {
+  transform: none;
+}
+
+[data-reveal-group] > :nth-child(2) { --reveal-delay: 90ms; }
+[data-reveal-group] > :nth-child(3) { --reveal-delay: 170ms; }
+[data-reveal-group] > :nth-child(4) { --reveal-delay: 240ms; }
+[data-reveal-group] > :nth-child(5) { --reveal-delay: 300ms; }
+[data-reveal-group] > :nth-child(n + 6) { --reveal-delay: 350ms; }
+
+.js :is([data-reveal], [data-reveal-group] > *)[data-in] {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+@keyframes intro-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--reveal-distance), 0);
+  }
+}
+
+@keyframes intro-zoom {
+  from {
+    opacity: 0;
+    transform: translate3d(0, calc(var(--reveal-distance) * 0.5), 0) scale(0.95);
+  }
+}
+
+.js [data-intro] {
+  animation: intro-up 1s var(--ease-out-expo) both;
+  animation-delay: var(--intro-delay, 0ms);
+}
+
+.js [data-intro="zoom"] {
+  animation-name: intro-zoom;
+  animation-duration: 1.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js :is([data-reveal], [data-reveal-group] > *) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .js [data-intro] {
+    animation: none;
+  }
+}

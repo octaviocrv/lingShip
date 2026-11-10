@@ -1,0 +1,28 @@
+# Build e dependências (Next/Node)
+node_modules/
+.next/
+out/
+build/
+dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel e segredos
+.vercel/
+.env
+.env.*
+!.env.example
+
+# Logs e temporários
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tmp
+
+# Sistema e editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

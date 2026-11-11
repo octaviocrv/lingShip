@@ -212,6 +212,61 @@
   will-change: auto;
 }
 
+/*
+ * TEXTOS SURGINDO (classes marcadas por components/effects/reveal-observer.tsx).
+ *   [data-txt]    parágrafos, itens e subtítulos: sobem com fade e saem do desfoque
+ *   [data-words]  títulos: cada palavra sobe de dentro de uma máscara, uma depois da outra
+ * O atraso da cascata vem de --txt-delay (definido no JS).
+ */
+.js [data-txt] {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  filter: blur(5px);
+  transition:
+    opacity 1s var(--ease-out-expo),
+    transform 1s var(--ease-out-expo),
+    filter 0.9s ease-out;
+  transition-delay: var(--txt-delay, 0ms);
+}
+
+.js [data-txt][data-in] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.js [data-words] .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0 0.04em 0.16em;
+  margin-bottom: -0.16em;
+}
+
+.js [data-words] .wi {
+  display: inline-block;
+  transform: translate3d(0, 112%, 0);
+  transition: transform 1.05s var(--ease-out-expo);
+  transition-delay: calc(var(--i, 0) * 70ms + var(--txt-delay, 0ms));
+}
+
+.js [data-words][data-in] .wi {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-txt] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+  .js [data-words] .wi {
+    transform: none;
+    transition: none;
+  }
+}
+
 /* Grupo da seção de métricas: sem JS aparece montado; com JS o progresso começa em 0 */
 .js .people-assemble {
   --p1: 0;

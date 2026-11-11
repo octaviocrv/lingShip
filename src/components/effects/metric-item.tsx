@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
+import { lofi } from "@/lib/lofi";
 
 type Phase = "final" | "armed" | "go" | "done";
 
@@ -51,6 +52,8 @@ export function MetricItem({
         if (!entry.isIntersecting) return;
         io.disconnect();
         setPhase("go");
+        // som do odômetro: do início do 1º rolo até o sinal saltar
+        lofi.roll((delay * factor) / 1000, ((settleBase - 900 - delay) * factor) / 1000);
         timer = window.setTimeout(() => setPhase("done"), (settleBase + 400) * factor);
       },
       { threshold: 0.6 },
@@ -60,7 +63,7 @@ export function MetricItem({
       io.disconnect();
       window.clearTimeout(timer);
     };
-  }, [settleBase]);
+  }, [settleBase, delay]);
 
   const armed = phase === "armed";
   const go = phase === "go" || phase === "done";

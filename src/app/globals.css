@@ -484,6 +484,30 @@
   transition: color 0.3s, border-color 0.3s;
 }
 
+.splash-sound-btn {
+  position: absolute;
+  left: 1.25rem;
+  top: calc(1.25rem + env(safe-area-inset-top));
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  border-radius: 999px;
+  border: 1px solid rgb(249 115 22 / 0.45);
+  padding: 0.5rem 0.95rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-orange);
+  transition: color 0.3s, border-color 0.3s, background-color 0.3s;
+}
+
+.splash-sound-btn:hover,
+.splash-sound-btn[aria-pressed="true"] {
+  background-color: rgb(249 115 22 / 0.12);
+}
+
 .splash-skip-btn:hover {
   color: #fff;
   border-color: rgb(255 255 255 / 0.4);

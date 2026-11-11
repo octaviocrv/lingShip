@@ -3,6 +3,7 @@
 import { Children, useEffect, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { lofi } from "@/lib/lofi";
 
 /**
  * A partir de 1024px (lg) o trilho volta a ser grade: some com rolagem, margens e espaçamentos
@@ -43,6 +44,7 @@ export function Carousel({
     const el = track.current;
     if (!el) return;
     let raf = 0;
+    let last = -1; // para tocar o "tic" só quando o cartão do centro muda
     // ativo = o cartão cujo centro está mais perto do centro do trilho
     const update = () => {
       raf = 0;
@@ -57,6 +59,8 @@ export function Carousel({
           best = i;
         }
       });
+      if (last !== -1 && best !== last) lofi.click();
+      last = best;
       setActive(best);
     };
     const onScroll = () => {

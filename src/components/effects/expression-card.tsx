@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { RefreshCw } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { lofi } from "@/lib/lofi";
 
 export type Expression = { phrase: string; phonetic: string; meaning: string; example: string };
 
@@ -18,6 +19,7 @@ export function ExpressionCard({ items, label }: { items: Expression[]; label: s
   const item = items[index];
 
   const next = () => {
+    lofi.paper();
     setFlipped(false);
     setIndex((i) => (i + 1) % items.length);
   };
@@ -26,7 +28,11 @@ export function ExpressionCard({ items, label }: { items: Expression[]; label: s
     <div>
       <button
         type="button"
-        onClick={() => setFlipped((v) => !v)}
+        onClick={() => {
+          lofi.paper();
+          setFlipped((v) => !v);
+        }}
+        data-own-sound
         aria-pressed={flipped}
         aria-label={flipped ? `${item.phrase}: ${item.meaning}` : `${item.phrase}. Toque para ver o significado`}
         className="relative block h-[10.5rem] w-full cursor-pointer -rotate-[1.2deg] text-left [perspective:1200px]"
@@ -70,6 +76,7 @@ export function ExpressionCard({ items, label }: { items: Expression[]; label: s
         <button
           type="button"
           onClick={next}
+          data-own-sound
           className="inline-flex cursor-pointer items-center gap-1.5 rounded-full px-2 py-1 text-[0.72rem] font-semibold text-purple transition-colors active:text-purple-deep"
         >
           Outra expressão

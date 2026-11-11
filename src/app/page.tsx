@@ -1,5 +1,6 @@
 import { IntroSplash } from "@/components/effects/intro-splash";
 import { RevealObserver } from "@/components/effects/reveal-observer";
+import { SoundSystem } from "@/components/effects/sound-system";
 import { MobileDock } from "@/components/layout/mobile-dock";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -38,6 +39,7 @@ export default function Home() {
       </main>
       <SiteFooter />
       <MobileDock />
+      <SoundSystem />
       <RevealObserver />
     </>
   );

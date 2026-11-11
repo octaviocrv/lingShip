@@ -1,16 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import {
-  BadgeCheck,
-  Briefcase,
-  CalendarDays,
-  Clock,
-  Lightbulb,
-  MessagesSquare,
-  Mic,
-  Presentation,
-  Sparkles,
-  Users,
-} from "lucide-react";
+import { BadgeCheck, CalendarDays, Clock, MessagesSquare, Presentation } from "lucide-react";
 
 export const hero = {
   eyebrow: "Plataforma de aprendizagem de inglês em comunidade",
@@ -54,15 +43,3 @@ export const heroFloating = {
   },
   bubble: { icon: MessagesSquare, label: "Chat de discussão" },
 };
-
-/** Faixa que corre no fim do hero. */
-export const activityTicker: { icon: LucideIcon; label: string }[] = [
-  { icon: Mic, label: "Aula ao vivo exclusiva comigo" },
-  { icon: MessagesSquare, label: "Chat de discussão: interpretar contexto" },
-  { icon: Presentation, label: "Marina apresentou sobre carreira" },
-  { icon: Lightbulb, label: "Material novo: dizer a mesma frase de outras formas" },
-  { icon: Users, label: "Estudantes se encontraram para apresentar" },
-  { icon: Briefcase, label: "Camila ensaiou uma entrevista de emprego" },
-  { icon: Sparkles, label: "Novos estudantes chegaram esta semana" },
-  { icon: MessagesSquare, label: "Turma discutiu como defender uma ideia" },
-];

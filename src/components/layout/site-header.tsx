@@ -54,23 +54,23 @@ export function SiteHeader() {
           "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,box-shadow,border-color] duration-500",
           // no topo fica transparente sobre o bloco lilás do hero; ao rolar, vira vidro creme
           scrolled || open
-            ? "border-line bg-cream/85 shadow-[0_12px_40px_-24px_rgb(43_33_64/0.35)] backdrop-blur-md"
+            ? "border-line bg-snow/85 shadow-[0_12px_40px_-24px_rgb(43_33_64/0.35)] backdrop-blur-md"
             : "border-transparent bg-transparent",
         )}
       >
-        <div className="mx-auto flex h-[76px] max-w-[1320px] items-center justify-between gap-6 px-5 sm:px-8 lg:h-[84px]">
-          <a href="#inicio" aria-label="Lingship, voltar ao início" onClick={() => setOpen(false)}>
+        <div className="mx-auto flex h-[76px] max-w-[1280px] items-center justify-between gap-6 px-5 sm:px-8 lg:h-[84px] lg:gap-8 lg:px-10 2xl:px-12">
+          <a href="#inicio" aria-label="Lingship, voltar ao início" onClick={() => setOpen(false)} className="shrink-0">
             <Logo />
           </a>
 
-          <nav aria-label="Principal" className="hidden lg:block">
-            <ul className="flex items-center gap-1">
+          <nav aria-label="Principal" className="hidden min-w-0 lg:block">
+            <ul className="flex items-center gap-0.5 xl:gap-1">
               {navigation.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
                     className={cn(
-                      "rounded-full px-3.5 py-2 text-[0.84rem] font-medium transition-colors",
+                      "whitespace-nowrap rounded-full px-2.5 py-2 text-[0.8rem] font-medium transition-colors xl:px-3.5 xl:text-[0.84rem]",
                       active === item.href ? "bg-surface text-purple" : "text-ink/80 hover:text-purple",
                     )}
                   >
@@ -81,16 +81,16 @@ export function SiteHeader() {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <LinkButton
               href="#contato"
               variant="light"
               size="sm"
-              className="hidden shadow-[0_10px_30px_rgb(76_42_147/0.12)] md:inline-flex lg:hidden xl:inline-flex"
+              className="hidden shadow-[0_10px_30px_rgb(43_33_64/0.12)] xl:inline-flex"
             >
               Fale comigo
             </LinkButton>
-            <LinkButton href="#planos" size="sm" className="hidden sm:inline-flex">
+            <LinkButton href="#planos" size="sm" className="hidden lg:inline-flex">
               Quero assinar
             </LinkButton>
             <button
@@ -145,7 +145,7 @@ export function SiteHeader() {
       <div
         id="menu-mobile"
         className={cn(
-          "fixed inset-x-0 bottom-0 top-[76px] z-40 overflow-y-auto bg-cream bg-aura transition-[opacity,visibility] duration-500 lg:hidden",
+          "fixed inset-x-0 bottom-0 top-[76px] z-40 overflow-y-auto bg-snow bg-aura transition-[opacity,visibility] duration-500 lg:hidden",
           open ? "visible opacity-100" : "invisible opacity-0",
         )}
       >

@@ -7,13 +7,14 @@ import { Desafios } from "@/components/sections/desafios";
 import { Faq } from "@/components/sections/faq";
 import { Filosofia } from "@/components/sections/filosofia";
 import { Hero } from "@/components/sections/hero";
+import { Metricas } from "@/components/sections/metricas";
 import { MateriaisGratuitos } from "@/components/sections/materiais-gratuitos";
 import { Metodo } from "@/components/sections/metodo";
 import { Planos } from "@/components/sections/planos";
 
 /**
  * Ordem das seções = ordem de rolagem do protótipo da Vanessa (SITE123):
- * hero, materiais gratuitos, método, filosofia e formação, desafios,
+ * hero, métricas, materiais gratuitos, método, filosofia e formação, desafios,
  * comunidade e depoimentos, planos, perguntas frequentes, contato e rodapé.
  */
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
       <SiteHeader />
       <main>
         <Hero />
+        <Metricas />
         <MateriaisGratuitos />
         <Metodo />
         <Filosofia />

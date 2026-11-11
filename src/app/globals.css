@@ -212,6 +212,23 @@
   will-change: auto;
 }
 
+/* Grupo da seção de métricas: sem JS aparece montado; com JS o progresso começa em 0 */
+.js .people-assemble {
+  --p1: 0;
+  --p2: 0;
+  --p3: 0;
+  --pj: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .people-assemble {
+    --p1: 1;
+    --p2: 1;
+    --p3: 1;
+    --pj: 1;
+  }
+}
+
 @keyframes intro-up {
   from {
     opacity: 0;

@@ -16,11 +16,11 @@ export function Contato() {
   return (
     <section id="contato" className="bg-aura py-14 sm:py-24 lg:py-28">
       <Container className="grid items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-        <div data-reveal>
-          <Eyebrow>{contatoSection.eyebrow}</Eyebrow>
+        <div data-reveal className="max-lg:text-center">
+          <Eyebrow className="max-lg:justify-center">{contatoSection.eyebrow}</Eyebrow>
           <h2 className="mt-5 text-title font-medium">{contatoSection.title}</h2>
-          <p className="mt-6 max-w-lg text-[0.95rem] leading-[1.9] text-muted">{contatoSection.description}</p>
-          <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+          <p className="mt-6 max-w-lg text-[0.95rem] leading-[1.9] text-muted max-lg:mx-auto">{contatoSection.description}</p>
+          <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3 max-lg:justify-center">
             {contatoSection.badges.map((badge, i) => {
               const Icon = badgeIcons[i] ?? Mail;
               return (

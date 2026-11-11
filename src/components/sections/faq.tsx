@@ -7,8 +7,8 @@ export function Faq() {
   return (
     <section id="duvidas" className="py-14 sm:py-24 lg:py-28">
       <Container className="max-w-[960px]">
-        <div data-reveal>
-          <Eyebrow>{faqSection.eyebrow}</Eyebrow>
+        <div data-reveal className="max-lg:text-center">
+          <Eyebrow className="max-lg:justify-center">{faqSection.eyebrow}</Eyebrow>
           <h2 className="mt-5 text-title font-medium">{faqSection.title}</h2>
         </div>
 

@@ -87,12 +87,14 @@ export function SectionHeading({ eyebrow, title, description, layout = "split", 
     <div
       data-reveal
       className={cn(
-        layout === "split" ? "grid items-end gap-6 lg:grid-cols-[1.15fr_1fr] lg:gap-16" : "max-w-3xl",
+        layout === "split" ? "grid items-end gap-6 lg:grid-cols-[1.15fr_1fr] lg:gap-16" : "max-w-3xl max-lg:mx-auto",
+        // no celular, rótulo, título e subtítulo centralizados
+        "max-lg:text-center",
         className,
       )}
     >
       <div>
-        <Eyebrow>{eyebrow}</Eyebrow>
+        <Eyebrow className="max-lg:justify-center">{eyebrow}</Eyebrow>
         <h2 className="mt-5 text-title font-medium">{title}</h2>
       </div>
       {description && (

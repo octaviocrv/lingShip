@@ -40,7 +40,7 @@ export function Comunidade() {
         </Carousel>
 
         {/* Vozes da comunidade */}
-        <p data-reveal className="mt-14 text-eyebrow font-bold uppercase text-purple sm:mt-20">
+        <p data-reveal className="mt-14 text-eyebrow font-bold uppercase text-purple max-lg:text-center sm:mt-20">
           {comunidadeSection.voicesTitle}
         </p>
         <Carousel label="Vozes da comunidade" className="mt-8" trackClassName={cn(GRID_LG, "lg:grid-cols-3")}>

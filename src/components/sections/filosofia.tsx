@@ -12,8 +12,8 @@ export function Filosofia() {
       <Container>
         <div className="grid items-start gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
           <div data-reveal>
-            <Eyebrow>{filosofiaSection.eyebrow}</Eyebrow>
-            <h2 className="mt-5 text-title font-medium">{filosofiaSection.title}</h2>
+            <Eyebrow className="max-lg:justify-center">{filosofiaSection.eyebrow}</Eyebrow>
+            <h2 className="mt-5 text-title font-medium max-lg:text-center">{filosofiaSection.title}</h2>
 
             <div className="mt-8 space-y-6 text-[0.95rem] leading-[1.95] text-muted">
               {filosofiaSection.paragraphs.map((paragraph, i) => (
@@ -61,7 +61,7 @@ export function Filosofia() {
 
         {/* A base que sustenta esse olhar */}
         <div className="mt-16 sm:mt-20 lg:mt-24">
-          <p data-reveal className="text-eyebrow font-bold uppercase text-purple">
+          <p data-reveal className="text-eyebrow font-bold uppercase text-purple max-lg:text-center">
             {baseTitle}
           </p>
           <Carousel label="Formação" className="mt-8" trackClassName={cn(GRID_LG, "lg:grid-cols-4")}>

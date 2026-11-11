@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Check, FileText } from "lucide-react";
+import { Carousel, GRID_LG } from "@/components/ui/carousel";
 import { ActionButton, Container, Eyebrow, IconBadge, LinkButton } from "@/components/ui/primitives";
 import { baseTitle, filosofiaSection, formacao } from "@/content/filosofia";
 import { cn } from "@/lib/cn";
@@ -7,7 +8,7 @@ import { cn } from "@/lib/cn";
 /** "Minha filosofia sobre educação" + formação da Vanessa (âncora "Sobre" do menu). */
 export function Filosofia() {
   return (
-    <section id="sobre" className="relative overflow-hidden py-20 sm:py-24 lg:py-28">
+    <section id="sobre" className="relative overflow-hidden py-14 sm:py-24 lg:py-28">
       <Container>
         <div className="grid items-start gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
           <div data-reveal>
@@ -59,16 +60,16 @@ export function Filosofia() {
         </div>
 
         {/* A base que sustenta esse olhar */}
-        <div className="mt-20 lg:mt-24">
+        <div className="mt-16 sm:mt-20 lg:mt-24">
           <p data-reveal className="text-eyebrow font-bold uppercase text-purple">
             {baseTitle}
           </p>
-          <ul data-reveal-group className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <Carousel label="Formação" className="mt-8" trackClassName={cn(GRID_LG, "lg:grid-cols-4")}>
             {formacao.map((bloco) => (
-              <li
+              <div
                 key={bloco.title}
                 className={cn(
-                  "flex flex-col rounded-card p-7",
+                  "flex h-full flex-col rounded-card p-7",
                   bloco.featured ? "bg-midnight text-white shadow-soft" : "glass",
                 )}
               >
@@ -94,9 +95,9 @@ export function Filosofia() {
                     </li>
                   ))}
                 </ul>
-              </li>
+              </div>
             ))}
-          </ul>
+          </Carousel>
         </div>
       </Container>
     </section>

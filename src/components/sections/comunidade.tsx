@@ -1,11 +1,13 @@
 import { Presentation, Quote } from "lucide-react";
+import { Carousel, GRID_LG } from "@/components/ui/carousel";
 import { Container, IconBadge, Initials, LinkButton, SectionHeading } from "@/components/ui/primitives";
+import { cn } from "@/lib/cn";
 import { apresentacoes, comunidadeSection, depoimentos } from "@/content/comunidade";
 
 /** "Comunidade viva": apresentações (faixa que desliza) + "Vozes da comunidade". */
 export function Comunidade() {
   return (
-    <section id="comunidade" className="overflow-hidden py-20 sm:py-24 lg:py-28">
+    <section id="comunidade" className="overflow-hidden py-14 sm:py-24 lg:py-28">
       <Container>
         <SectionHeading
           eyebrow={comunidadeSection.eyebrow}
@@ -14,16 +16,16 @@ export function Comunidade() {
         />
 
         {/* Apresentações: desliza na horizontal ("Deslize para ver algumas apresentações") */}
-        <ul
-          data-reveal
-          aria-label="Apresentações da comunidade"
-          className="no-scrollbar -mx-5 mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 sm:-mx-8 sm:px-8 lg:mt-14"
+        {/* no desktop continua a faixa que desliza (3 por vez); no celular ganha pontos e setas */}
+        <Carousel
+          label="Apresentações da comunidade"
+          reveal="block"
+          className="mt-10 lg:mt-14"
+          trackClassName="lg:gap-5 lg:pb-4 lg:pt-0"
+          slideClassName="lg:w-[calc((100%-2.5rem)/3)] lg:snap-start"
         >
           {apresentacoes.map((pessoa) => (
-            <li
-              key={pessoa.name}
-              className="glass flex w-[82%] shrink-0 snap-start flex-col rounded-card p-7 sm:w-[46%] lg:w-[calc((100%-2.5rem)/3)]"
-            >
+            <div key={pessoa.name} className="glass flex h-full flex-col rounded-card p-7">
               <IconBadge icon={Presentation} />
               <p className="mt-6 flex-1 text-[0.92rem] leading-[1.85] text-muted">{pessoa.quote}</p>
               <div className="mt-6 flex items-center gap-3 border-t border-line pt-5">
@@ -33,17 +35,17 @@ export function Comunidade() {
                   <p className="text-[0.76rem] text-purple">{pessoa.role}</p>
                 </div>
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </Carousel>
 
         {/* Vozes da comunidade */}
-        <p data-reveal className="mt-20 text-eyebrow font-bold uppercase text-purple">
+        <p data-reveal className="mt-14 text-eyebrow font-bold uppercase text-purple sm:mt-20">
           {comunidadeSection.voicesTitle}
         </p>
-        <ul data-reveal-group className="mt-8 grid gap-5 md:grid-cols-3">
+        <Carousel label="Vozes da comunidade" className="mt-8" trackClassName={cn(GRID_LG, "lg:grid-cols-3")}>
           {depoimentos.map((pessoa) => (
-            <li key={pessoa.name} className="glass flex flex-col rounded-card p-7">
+            <div key={pessoa.name} className="glass flex h-full flex-col rounded-card p-7">
               <Quote className="size-7 fill-orange text-orange" aria-hidden />
               <blockquote className="mt-5 flex-1 text-[0.92rem] leading-[1.85] text-muted">{pessoa.quote}</blockquote>
               <div className="mt-6 flex items-center gap-3 border-t border-line pt-5">
@@ -53,9 +55,9 @@ export function Comunidade() {
                   <p className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-muted">{pessoa.role}</p>
                 </div>
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </Carousel>
 
         <div
           data-reveal

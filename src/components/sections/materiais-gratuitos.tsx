@@ -1,10 +1,12 @@
 import { Play } from "lucide-react";
+import { Carousel, GRID_LG } from "@/components/ui/carousel";
+import { cn } from "@/lib/cn";
 import { ActionButton, Container, SectionHeading, Tag } from "@/components/ui/primitives";
 import { materiais, materiaisSection, type Material } from "@/content/materiais";
 
 export function MateriaisGratuitos() {
   return (
-    <section id="materiais" className="py-20 sm:py-24 lg:py-28">
+    <section id="materiais" className="py-14 sm:py-24 lg:py-28">
       <Container>
         <SectionHeading
           eyebrow={materiaisSection.eyebrow}
@@ -12,13 +14,15 @@ export function MateriaisGratuitos() {
           description={materiaisSection.description}
         />
 
-        <ul data-reveal-group className="mt-12 grid gap-5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4">
+        <Carousel
+          label="Materiais gratuitos"
+          className="mt-10 lg:mt-14"
+          trackClassName={cn(GRID_LG, "lg:grid-cols-4")}
+        >
           {materiais.map((material) => (
-            <li key={material.id}>
-              <MaterialCard material={material} />
-            </li>
+            <MaterialCard key={material.id} material={material} />
           ))}
-        </ul>
+        </Carousel>
 
         <div
           data-reveal
@@ -40,7 +44,7 @@ function MaterialCard({ material }: { material: Material }) {
   return (
     <article className="glass group flex h-full flex-col overflow-hidden rounded-card">
       <div
-        className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-purple-strong via-purple to-[#9b6ee0]"
+        className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-midnight via-purple to-rose"
         data-video-slot={material.id}
       >
         {/* espaço reservado para o vídeo: inserir o player aqui quando o vídeo existir */}
@@ -49,7 +53,7 @@ function MaterialCard({ material }: { material: Material }) {
           className="absolute -right-10 -top-10 size-40 rounded-full bg-white/10 blur-2xl transition-transform duration-700 group-hover:scale-125"
         />
         <span className="absolute inset-0 grid place-items-center">
-          <span className="grid size-14 place-items-center rounded-full bg-orange text-ink shadow-button transition-transform duration-300 group-hover:scale-110">
+          <span className="grid size-14 place-items-center rounded-full bg-orange text-midnight shadow-button transition-transform duration-300 group-hover:scale-110">
             <Play className="ml-0.5 size-5 fill-current" aria-hidden />
           </span>
         </span>

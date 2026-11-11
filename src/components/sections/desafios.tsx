@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Carousel, GRID_LG } from "@/components/ui/carousel";
 import { Container, IconBadge, SectionHeading } from "@/components/ui/primitives";
 import { categorias, desafios, desafiosSection } from "@/content/desafios";
 import { cn } from "@/lib/cn";
@@ -13,7 +14,7 @@ export function Desafios() {
   const visiveis = filtro === "Todos" ? desafios : desafios.filter((d) => d.category === filtro);
 
   return (
-    <section id="desafios" className="bg-lilac/50 py-20 sm:py-24 lg:py-28">
+    <section id="desafios" className="bg-blush/70 py-14 sm:py-24 lg:py-28">
       <Container>
         <SectionHeading
           eyebrow={desafiosSection.eyebrow}
@@ -38,7 +39,7 @@ export function Desafios() {
                 onClick={() => setFiltro(categoria)}
                 className={cn(
                   "h-10 shrink-0 cursor-pointer rounded-full px-5 text-[0.84rem] font-medium transition-all duration-300",
-                  ativo ? "bg-purple-strong text-white shadow-soft" : "glass-flat text-ink/80 hover:text-purple",
+                  ativo ? "bg-midnight text-white shadow-soft" : "glass-flat text-ink/80 hover:text-purple",
                 )}
               >
                 {categoria}
@@ -48,18 +49,24 @@ export function Desafios() {
         </div>
 
         {visiveis.length > 0 ? (
-          <ul className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <Carousel
+            key={filtro}
+            label={`Desafios: ${filtro}`}
+            reveal="none"
+            className="mt-8"
+            trackClassName={cn(GRID_LG, "lg:grid-cols-3")}
+          >
             {visiveis.map((desafio) => (
-              <li key={desafio.title} className="glass flex flex-col rounded-card p-7">
+              <div key={desafio.title} className="glass flex h-full flex-col rounded-card p-7">
                 <IconBadge icon={desafio.icon} />
                 <h3 className="mt-5 text-[1.15rem] font-medium leading-snug">{desafio.title}</h3>
                 <p className="mt-3 flex-1 text-[0.86rem] leading-[1.8] text-muted">{desafio.description}</p>
                 <p className="mt-5 text-[0.66rem] font-bold uppercase tracking-[0.22em] text-purple">
                   {desafio.category}
                 </p>
-              </li>
+              </div>
             ))}
-          </ul>
+          </Carousel>
         ) : (
           <p className="glass mt-8 rounded-card p-8 text-center text-[0.92rem] text-muted">{desafiosSection.empty}</p>
         )}

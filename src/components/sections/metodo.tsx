@@ -1,11 +1,13 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import { Carousel, GRID_LG } from "@/components/ui/carousel";
 import { Container, IconBadge, LinkButton, SectionHeading } from "@/components/ui/primitives";
+import { cn } from "@/lib/cn";
 import { metodoSection, passos } from "@/content/metodo";
 
 export function Metodo() {
   return (
-    <section id="metodo" className="relative bg-lilac/60 py-20 sm:py-24 lg:py-28">
+    <section id="metodo" className="relative bg-lilac/60 py-14 sm:py-24 lg:py-28">
       <Container>
         <SectionHeading
           eyebrow={metodoSection.eyebrow}
@@ -14,9 +16,9 @@ export function Metodo() {
           layout="stack"
         />
 
-        <ol data-reveal-group className="mt-12 grid gap-5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-5">
+        <Carousel label="Os 5 passos do método" className="mt-10 lg:mt-14" trackClassName={cn(GRID_LG, "lg:grid-cols-5")}>
           {passos.map((passo, i) => (
-            <li key={passo.title} className="glass flex flex-col overflow-hidden rounded-card">
+            <div key={passo.title} className="glass flex h-full flex-col overflow-hidden rounded-card">
               {/* foto do passo, com o ícone pousando na borda */}
               <div className="relative aspect-[4/3]">
                 {/* o corte da foto fica só nesta camada, para o ícone poder passar da borda */}
@@ -43,9 +45,9 @@ export function Metodo() {
                 <h3 className="mt-3 text-[1.15rem] font-medium">{passo.title}</h3>
                 <p className="mt-3 text-[0.86rem] leading-[1.8] text-muted">{passo.description}</p>
               </div>
-            </li>
+            </div>
           ))}
-        </ol>
+        </Carousel>
 
         <div data-reveal className="mt-10">
           <LinkButton href={metodoSection.cta.href}>

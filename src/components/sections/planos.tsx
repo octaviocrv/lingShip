@@ -1,10 +1,12 @@
 import Image from "next/image";
+import { Carousel, GRID_LG } from "@/components/ui/carousel";
 import { ActionButton, Container, LinkButton, SectionHeading, Tag } from "@/components/ui/primitives";
+import { cn } from "@/lib/cn";
 import { planos, planosSection } from "@/content/planos";
 
 export function Planos() {
   return (
-    <section id="planos" className="bg-lilac/50 py-20 sm:py-24 lg:py-28">
+    <section id="planos" className="bg-lilac/60 py-14 sm:py-24 lg:py-28">
       <Container>
         <SectionHeading
           eyebrow={planosSection.eyebrow}
@@ -12,9 +14,13 @@ export function Planos() {
           description={planosSection.description}
         />
 
-        <ul data-reveal-group className="mt-12 grid gap-5 sm:grid-cols-2 lg:mt-14 xl:grid-cols-4">
+        <Carousel
+          label="Planos e pacotes"
+          className="mt-10 lg:mt-14"
+          trackClassName={cn(GRID_LG, "lg:grid-cols-2 xl:grid-cols-4")}
+        >
           {planos.map((plano) => (
-            <li key={plano.id} className="glass flex flex-col rounded-card p-4">
+            <div key={plano.id} className="glass flex h-full flex-col rounded-card p-4">
               <div className="relative aspect-[3/2] overflow-hidden rounded-[1.1rem] bg-surface">
                 <Image
                   src={plano.photo.src}
@@ -31,9 +37,9 @@ export function Planos() {
                 <p className="mt-6 font-serif text-[1.9rem] font-medium text-ink">{plano.price}</p>
                 <ActionButton className="mt-5 self-start">{plano.cta}</ActionButton>
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </Carousel>
 
         <div
           data-reveal

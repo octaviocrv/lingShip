@@ -1,3 +1,4 @@
+import { IntroSplash } from "@/components/effects/intro-splash";
 import { RevealObserver } from "@/components/effects/reveal-observer";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -20,6 +21,7 @@ import { Planos } from "@/components/sections/planos";
 export default function Home() {
   return (
     <>
+      <IntroSplash />
       <SiteHeader />
       <main>
         <Hero />

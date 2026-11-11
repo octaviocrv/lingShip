@@ -318,3 +318,217 @@
     animation: none;
   }
 }
+
+/*
+ * ABERTURA (components/effects/intro-splash.tsx). Só existe com <html class="splash">,
+ * que o script do <head> coloca quando há JS e o visitante não pediu "reduzir movimento".
+ * Linha do tempo: letreiro 0,1–1,3s · símbolo 1,15–2,1s · nome 1,6–2,5s · cortina 2,75–3,6s.
+ */
+.splash-overlay {
+  display: none;
+}
+
+.splash .splash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  color: var(--color-snow);
+  background-color: var(--color-midnight);
+  /* pautas de caderno + margem laranja */
+  background-image:
+    linear-gradient(to right, transparent calc(12% - 1px), rgb(249 115 22 / 0.35) calc(12% - 1px), rgb(249 115 22 / 0.35) 12%, transparent 12%),
+    repeating-linear-gradient(to bottom, transparent 0 39px, rgb(255 255 255 / 0.05) 39px 40px);
+  clip-path: inset(0 0 0 0 round 0 0 0 0);
+  animation: splash-out 0.85s cubic-bezier(0.7, 0, 0.2, 1) 2.75s forwards;
+}
+
+.splash .splash-overlay.is-skip {
+  animation: splash-out 0.55s cubic-bezier(0.7, 0, 0.2, 1) forwards;
+}
+
+.splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: splash-content-out 0.6s cubic-bezier(0.7, 0, 0.2, 1) 2.7s forwards;
+}
+
+.splash-stage {
+  display: grid;
+  place-items: center;
+}
+
+.splash-stage > * {
+  grid-area: 1 / 1;
+}
+
+/* letreiro de "olá" */
+.splash-words {
+  height: 1.15em;
+  overflow: hidden;
+  font-family: var(--font-serif);
+  font-size: clamp(2.6rem, 2rem + 3vw, 4.2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  animation: splash-fade-up 0.4s ease 1.15s forwards;
+}
+
+.splash-words-track {
+  display: flex;
+  flex-direction: column;
+  animation: splash-words 1.15s cubic-bezier(0.7, 0, 0.3, 1) 0.1s both;
+}
+
+.splash-words-track > span {
+  display: block;
+  height: 1.15em;
+}
+
+.splash-words-track > span:last-child {
+  color: var(--color-orange);
+}
+
+/* símbolo L" */
+.splash-mark {
+  width: clamp(5rem, 4rem + 4vw, 6.5rem);
+  overflow: visible;
+}
+
+.splash-mark > * {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.splash-mark-box {
+  fill: var(--color-purple);
+  animation: splash-pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 1.15s both;
+}
+
+.splash-mark-l {
+  fill: var(--color-snow);
+  font-family: var(--font-logo);
+  animation: splash-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1.35s both;
+}
+
+.splash-mark-q {
+  fill: var(--color-orange);
+  font-family: var(--font-logo);
+  animation: splash-drop 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) 1.55s both;
+}
+
+/* nome e tagline */
+.splash-name {
+  margin-top: 1.4rem;
+  display: flex;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  font-family: var(--font-logo);
+  font-size: clamp(2rem, 1.6rem + 2vw, 2.8rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.splash-name > span {
+  display: inline-block;
+  animation: splash-letter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.splash-tagline {
+  margin-top: 0.9rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-rose);
+  animation: splash-fade-in 0.6s ease 1.95s both;
+}
+
+/* linha de progresso */
+.splash-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  transform-origin: left;
+  background: var(--color-orange);
+  animation: splash-progress 2.6s cubic-bezier(0.45, 0, 0.2, 1) both;
+}
+
+.splash-skip-btn {
+  position: absolute;
+  right: 1.25rem;
+  top: calc(1.25rem + env(safe-area-inset-top));
+  cursor: pointer;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  padding: 0.5rem 1rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.7);
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.splash-skip-btn:hover {
+  color: #fff;
+  border-color: rgb(255 255 255 / 0.4);
+}
+
+/* o hero espera a cortina subir para fazer a própria entrada */
+.splash:not(.splash-skip) [data-intro] {
+  animation-delay: calc(var(--intro-delay, 0ms) + 2950ms);
+}
+
+@keyframes splash-words {
+  0%, 14% { transform: translateY(0); }
+  20%, 32% { transform: translateY(-1.15em); }
+  38%, 50% { transform: translateY(-2.3em); }
+  56%, 68% { transform: translateY(-3.45em); }
+  74%, 86% { transform: translateY(-4.6em); }
+  92%, 100% { transform: translateY(-5.75em); }
+}
+
+@keyframes splash-fade-up {
+  to { opacity: 0; transform: translateY(-14px); }
+}
+
+@keyframes splash-pop {
+  from { opacity: 0; transform: scale(0.4) rotate(-14deg); }
+}
+
+@keyframes splash-rise {
+  from { opacity: 0; transform: translateY(35%); }
+}
+
+@keyframes splash-drop {
+  from { opacity: 0; transform: translateY(-60%) scale(0.3); }
+}
+
+@keyframes splash-letter {
+  from { opacity: 0; transform: translateY(0.7em); }
+}
+
+@keyframes splash-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+}
+
+@keyframes splash-progress {
+  from { transform: scaleX(0); }
+}
+
+@keyframes splash-content-out {
+  to { opacity: 0; transform: translateY(-40px) scale(0.96); }
+}
+
+@keyframes splash-out {
+  to {
+    clip-path: inset(0 0 100% 0 round 0 0 50% 50%);
+    visibility: hidden;
+  }
+}

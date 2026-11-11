@@ -50,7 +50,15 @@ export const viewport: Viewport = {
 };
 
 // Roda antes da primeira pintura: marca que há JS (só então os [data-reveal] começam ocultos).
-const HEAD_SCRIPT = `document.documentElement.classList.add("js")`;
+// Também: ao recarregar, a página sempre volta ao topo (sem restaurar a rolagem nem pular para
+// a âncora da URL) e liga a abertura ("splash") quando o visitante não pediu menos movimento.
+const HEAD_SCRIPT = [
+  `var d=document.documentElement;d.classList.add("js");`,
+  `try{history.scrollRestoration="manual"}catch(e){}`,
+  `if(location.hash){history.replaceState(null,"",location.pathname+location.search)}`,
+  `window.scrollTo(0,0);`,
+  `if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){d.classList.add("splash")}`,
+].join("");
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

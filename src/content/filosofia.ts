@@ -39,8 +39,8 @@ export const filosofiaSection = {
   curriculumCta: "Ver currículo completo",
   plansCta: { label: "Ver planos", href: "#planos" },
   photo: {
-    src: "/fotos/vanessa-filosofia.jpg",
-    alt: "Vanessa Mendes sorrindo, com a mão estendida como quem apresenta algo",
+    src: "/fotos/lendo-o-livro.jpg",
+    alt: "Vanessa Mendes lendo um livro num sofá, ao lado de uma estante cheia de livros e plantas",
   },
 };
 

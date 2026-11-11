@@ -48,7 +48,7 @@ export function Filosofia() {
                 fill
                 quality={85}
                 sizes="(min-width: 1024px) 440px, 90vw"
-                className="object-cover object-[40%_20%]"
+                className="object-cover object-[58%_30%]"
               />
               <span
                 aria-hidden
@@ -69,7 +69,7 @@ export function Filosofia() {
                 key={bloco.title}
                 className={cn(
                   "flex flex-col rounded-card p-7",
-                  bloco.featured ? "bg-purple-strong text-white shadow-soft" : "glass",
+                  bloco.featured ? "bg-midnight text-white shadow-soft" : "glass",
                 )}
               >
                 <IconBadge icon={bloco.icon} className={cn(bloco.featured && "bg-white/15 text-white")} />

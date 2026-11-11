@@ -56,9 +56,11 @@ export function SiteHeader() {
           scrolled || open
             ? "border-line bg-snow/85 shadow-[0_12px_40px_-24px_rgb(43_33_64/0.35)] backdrop-blur-md"
             : "border-transparent bg-transparent",
+          // no celular: barra de ponta a ponta em vidro creme, base arredondada e sombra suave (sem linha dura)
+          "max-lg:rounded-b-[1.75rem] max-lg:border-transparent max-lg:bg-snow/80 max-lg:shadow-[0_16px_36px_-22px_rgb(43_33_64/0.45)] max-lg:backdrop-blur-md",
         )}
       >
-        <div className="mx-auto flex h-[76px] max-w-[1280px] items-center justify-between gap-6 px-5 sm:px-8 lg:h-[84px] lg:gap-8 lg:px-10 2xl:px-12">
+        <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between gap-4 px-6 sm:px-8 lg:h-[84px] lg:gap-8 lg:px-10 2xl:px-12">
           <a href="#inicio" aria-label="Lingship, voltar ao início" onClick={() => setOpen(false)} className="shrink-0">
             <Logo />
           </a>
@@ -82,17 +84,17 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <LinkButton
-              href="#contato"
-              variant="light"
-              size="sm"
-              className="hidden shadow-[0_10px_30px_rgb(43_33_64/0.12)] xl:inline-flex"
-            >
-              Fale comigo
-            </LinkButton>
-            <LinkButton href="#planos" size="sm" className="hidden lg:inline-flex">
-              Quero assinar
-            </LinkButton>
+            {/* o "esconder" fica num invólucro: na mesma tag, hidden e inline-flex brigavam e o botão aparecia no celular */}
+            <span className="hidden xl:block">
+              <LinkButton href="#contato" variant="light" size="sm" className="shadow-[0_10px_30px_rgb(43_33_64/0.12)]">
+                Fale comigo
+              </LinkButton>
+            </span>
+            <span className="hidden lg:block">
+              <LinkButton href="#planos" size="sm">
+                Quero assinar
+              </LinkButton>
+            </span>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
@@ -101,7 +103,7 @@ export function SiteHeader() {
               aria-label={open ? "Fechar menu" : "Abrir menu"}
               className={cn(
                 "grid size-11 place-items-center rounded-full transition-colors duration-300 lg:hidden",
-                open ? "bg-purple text-white" : "bg-surface text-purple hover:bg-lilac",
+                open ? "bg-midnight text-white" : "bg-white text-midnight shadow-[0_8px_22px_rgb(43_33_64/0.14)] ring-1 ring-line",
               )}
             >
               {/* hambúrguer em SVG: 3 traços que viram X */}
@@ -145,7 +147,7 @@ export function SiteHeader() {
       <div
         id="menu-mobile"
         className={cn(
-          "fixed inset-x-0 bottom-0 top-[76px] z-40 overflow-y-auto bg-snow bg-aura transition-[opacity,visibility] duration-500 lg:hidden",
+          "fixed inset-x-0 bottom-0 top-[72px] z-40 overflow-y-auto bg-snow bg-aura transition-[opacity,visibility] duration-500 lg:hidden",
           open ? "visible opacity-100" : "invisible opacity-0",
         )}
       >

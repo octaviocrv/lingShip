@@ -46,7 +46,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fcfaf7",
+  themeColor: "#faf7f4",
 };
 
 // Roda antes da primeira pintura: marca que há JS (só então os [data-reveal] começam ocultos).

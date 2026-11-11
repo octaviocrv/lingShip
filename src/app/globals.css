@@ -2,23 +2,37 @@
 
 /*
  * Design tokens da Lingship.
- * Cores e fontes tiradas do tema do protótipo da Vanessa no SITE123
- * (identidade/design-guide.md): fundo off-white, roxo como cor da marca,
- * laranja nos botões, títulos em serifada Lora e corpo em Montserrat.
+ * Paleta que equilibra três fontes:
+ *   - a logo (L" grafite-roxo, roxo e aspas laranja): midnight, purple, orange;
+ *   - a paleta antiga do protótipo: lilás e creme;
+ *   - a paleta ameixa/coral testada: coral e rosas.
+ * Leitura: o grafite-roxo é a voz da marca (títulos, faixas escuras), o roxo guia
+ * (rótulos, links, ícones), o laranja é a aspa, a fala (botões e destaques), e o
+ * lilás + rosa aquecem o fundo como um bate-papo num café.
  */
 @theme {
-  /* Cores da marca */
-  --color-ink: #2b2140; /* texto principal e títulos */
-  --color-muted: #5f5776; /* texto secundário */
-  --color-purple: #6d3fc0; /* cor principal da marca */
-  --color-purple-strong: #4c2a93; /* card em destaque, hover */
-  --color-violet: #7c3aed; /* subtítulo do logo */
-  --color-lilac: #f1e9fb; /* superfícies lilás, rodapé */
-  --color-surface: #f5effc; /* fundos de ícone e etiquetas */
-  --color-orange: #f97316; /* botões e destaques */
+  /* Da logo */
+  --color-midnight: #2b2140; /* fundo do L": títulos, rodapé, cards em destaque */
+  --color-purple: #6d3fc0; /* roxo da marca: rótulos, links, ícones */
+  --color-purple-deep: #4c2a93; /* hover do roxo */
+  --color-orange: #f97316; /* aspas da logo: botões (texto grafite) e destaques */
   --color-orange-hover: #ea580c;
-  --color-orange-deep: #c2410c;
-  --color-cream: #fcfaf7; /* fundo da página */
+  --color-orange-deep: #c2410c; /* laranja para texto sobre fundo claro */
+
+  /* Ponte quente (paleta coral) */
+  --color-coral: #da5045; /* avatares e detalhes quentes */
+  --color-coral-deep: #b93a30;
+  --color-rose: #dda7a5; /* rosa queimado: gradientes e detalhes no escuro */
+
+  /* Superfícies */
+  --color-lilac: #f1e9fb; /* lilás da paleta antiga: seções alternadas */
+  --color-blush: #f3e1de; /* rosa pálido clareado: seções alternadas, hero */
+  --color-snow: #faf7f4; /* creme da logo: fundo da página */
+  --color-surface: #f1eaf9; /* fundo de ícones e etiquetas */
+
+  /* Texto */
+  --color-ink: #463a53; /* texto principal: entre o grafite da logo e o cinza arroxeado */
+  --color-muted: #6f6479; /* texto de apoio */
   --color-line: rgb(43 33 64 / 0.12);
 
   /* Tipografia */
@@ -58,6 +72,7 @@
       transform: translateX(-50%);
     }
   }
+
 }
 
 /* Base */
@@ -69,8 +84,12 @@
   }
 
   body {
+    overflow-x: clip;
+  }
+
+  body {
     min-height: 100dvh;
-    background: var(--color-cream);
+    background: var(--color-snow);
     color: var(--color-ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -81,7 +100,7 @@
   h2,
   h3 {
     font-family: var(--font-serif);
-    color: var(--color-ink);
+    color: var(--color-midnight);
     text-wrap: balance;
   }
 
@@ -119,7 +138,7 @@
 /* Card de vidro translúcido, como os cards do protótipo */
 @utility glass {
   background: rgb(255 255 255 / 0.62);
-  border: 1px solid rgb(109 63 192 / 0.14);
+  border: 1px solid rgb(109 63 192 / 0.12);
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -128,16 +147,16 @@
 /* Mesmo vidro, sem sombra (pílulas, faixa de atividades, acordeão fechado) */
 @utility glass-flat {
   background: rgb(255 255 255 / 0.62);
-  border: 1px solid rgb(109 63 192 / 0.14);
+  border: 1px solid rgb(109 63 192 / 0.12);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
 
-/* Fundo da página com manchas suaves de lilás e pêssego */
+/* Fundo da página com manchas suaves de lilás e rosa */
 @utility bg-aura {
   background-image:
-    radial-gradient(60rem 40rem at 100% 0%, rgb(109 63 192 / 0.08), transparent 60%),
-    radial-gradient(50rem 36rem at 0% 100%, rgb(249 115 22 / 0.06), transparent 60%);
+    radial-gradient(60rem 40rem at 100% 0%, rgb(109 63 192 / 0.07), transparent 60%),
+    radial-gradient(50rem 36rem at 0% 100%, rgb(221 167 165 / 0.18), transparent 60%);
 }
 
 /* Esconde a barra de rolagem nas faixas que deslizam na horizontal */

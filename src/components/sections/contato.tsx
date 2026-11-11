@@ -14,7 +14,7 @@ export function Contato() {
   const badgeIcons = [Mail, Mic];
 
   return (
-    <section id="contato" className="bg-aura py-20 sm:py-24 lg:py-28">
+    <section id="contato" className="bg-aura py-14 sm:py-24 lg:py-28">
       <Container className="grid items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
         <div data-reveal>
           <Eyebrow>{contatoSection.eyebrow}</Eyebrow>

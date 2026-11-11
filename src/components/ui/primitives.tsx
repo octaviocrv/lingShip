@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
 /* Container */
 
 export function Container({ className, children }: { className?: string; children: ReactNode }) {
-  return <div className={cn("mx-auto w-full max-w-[1240px] px-5 sm:px-8", className)}>{children}</div>;
+  return <div className={cn("mx-auto w-full max-w-[1280px] px-5 sm:px-8 lg:px-10 2xl:px-12", className)}>{children}</div>;
 }
 
 /* Botões */
@@ -14,10 +14,10 @@ type Variant = "orange" | "ghost" | "light";
 type Size = "sm" | "md" | "lg";
 
 const variants: Record<Variant, string> = {
-  // Texto escuro sobre o laranja: mantém o contraste legível (o branco ficaria fraco).
-  orange: "bg-orange text-ink shadow-button hover:bg-orange-hover hover:-translate-y-0.5",
+  // Laranja das aspas com texto grafite, o mesmo par da logo (contraste ~5,6:1).
+  orange: "bg-orange text-midnight shadow-button hover:bg-orange-hover hover:-translate-y-0.5",
   ghost: "glass text-ink hover:border-purple/40 hover:-translate-y-0.5",
-  light: "bg-white text-purple-strong hover:-translate-y-0.5 hover:bg-lilac",
+  light: "bg-white text-midnight hover:-translate-y-0.5 hover:bg-lilac",
 };
 
 const sizes: Record<Size, string> = {
@@ -131,7 +131,7 @@ export function Tag({ children, className }: { children: ReactNode; className?: 
 
 export function Initials({ children }: { children: ReactNode }) {
   return (
-    <span className="grid size-11 shrink-0 place-items-center rounded-full bg-orange/15 text-[0.72rem] font-bold tracking-[0.06em] text-orange-deep">
+    <span className="grid size-11 shrink-0 place-items-center rounded-full bg-coral/15 text-[0.72rem] font-bold tracking-[0.06em] text-coral-deep">
       {children}
     </span>
   );

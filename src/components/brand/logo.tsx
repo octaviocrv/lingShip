@@ -2,28 +2,72 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/cn";
 
 /**
- * Logo em texto, como no protótipo: "Lingship" em Playfair Display roxa
- * e "Inglês na prática" em caixa alta espaçada logo abaixo.
- * Trocar por arquivo de logo quando a Vanessa enviar a versão em alta resolução.
+ * Símbolo L" da Lingship: o "L" fecha uma citação, lê-se "L disse" (a voz da Vanessa).
+ * Quadrado arredondado grafite (ou roxo, sobre fundo escuro), L serifado creme e aspas laranja.
+ * Desenhado em SVG com a Playfair Display do site; trocar pelo arquivo final quando houver.
  */
-export function Logo({ size = "md", className }: { size?: "md" | "lg"; className?: string }) {
+export function LogoMark({ tone = "dark", className }: { tone?: "dark" | "light"; className?: string }) {
   return (
-    <span className={cn("inline-flex flex-col items-center leading-none", className)}>
-      <span
-        className={cn(
-          "font-logo font-medium tracking-[-0.01em] text-purple",
-          size === "lg" ? "text-[2.6rem]" : "text-[1.75rem] sm:text-[1.9rem]",
-        )}
+    <svg viewBox="0 0 64 64" aria-hidden className={cn("shrink-0", className)}>
+      <rect width="64" height="64" rx="18" className={tone === "light" ? "fill-purple" : "fill-midnight"} />
+      <text
+        x="27"
+        y="50"
+        textAnchor="middle"
+        fontSize="46"
+        fontWeight="600"
+        className="fill-snow"
+        style={{ fontFamily: "var(--font-logo)" }}
       >
-        {siteConfig.name}
-      </span>
-      <span
-        className={cn(
-          "mt-1 font-bold uppercase text-violet",
-          size === "lg" ? "text-[0.72rem] tracking-[0.34em]" : "text-[0.55rem] tracking-[0.3em]",
-        )}
+        L
+      </text>
+      <text
+        x="46"
+        y="40"
+        textAnchor="middle"
+        fontSize="30"
+        fontWeight="700"
+        className="fill-orange"
+        style={{ fontFamily: "var(--font-logo)" }}
       >
-        {siteConfig.subtitle}
+        {"”"}
+      </text>
+    </svg>
+  );
+}
+
+/** Símbolo + nome "Lingship" + "Inglês na prática". `tone="light"` é a versão para o rodapé grafite. */
+export function Logo({
+  size = "md",
+  tone = "dark",
+  className,
+}: {
+  size?: "md" | "lg";
+  tone?: "dark" | "light";
+  className?: string;
+}) {
+  return (
+    <span className={cn("inline-flex items-center", size === "lg" ? "gap-4" : "gap-3", className)}>
+      <LogoMark tone={tone} className={size === "lg" ? "size-14" : "size-10 sm:size-11"} />
+      <span className="flex flex-col leading-none">
+        <span
+          className={cn(
+            "font-logo font-semibold tracking-[-0.01em]",
+            tone === "light" ? "text-snow" : "text-midnight",
+            size === "lg" ? "text-[2.1rem]" : "text-[1.5rem] sm:text-[1.65rem]",
+          )}
+        >
+          {siteConfig.name}
+        </span>
+        <span
+          className={cn(
+            "mt-1.5 font-bold uppercase",
+            tone === "light" ? "text-rose" : "text-purple",
+            size === "lg" ? "text-[0.66rem] tracking-[0.3em]" : "text-[0.52rem] tracking-[0.28em]",
+          )}
+        >
+          {siteConfig.subtitle}
+        </span>
       </span>
     </span>
   );

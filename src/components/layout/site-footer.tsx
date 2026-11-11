@@ -6,22 +6,28 @@ import { footerContact } from "@/content/contato";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-line bg-lilac/60">
-      <Container className="pb-10 pt-16 sm:pt-20">
-        <div className="grid gap-12 md:grid-cols-[1.3fr_1fr_1.1fr]">
+    <footer className="bg-midnight text-white/70">
+      {/* no celular o rodapé é compacto: logo menor, sem a descrição, links em duas colunas */}
+      <Container className="pb-8 pt-10 md:pb-10 md:pt-20">
+        <div className="grid gap-8 md:grid-cols-[1.3fr_1fr_1.1fr] md:gap-12">
           <div>
             <a href="#inicio" aria-label="Lingship, voltar ao início" className="inline-block">
-              <Logo size="lg" />
+              <span className="md:hidden">
+                <Logo tone="light" />
+              </span>
+              <span className="hidden md:block">
+                <Logo size="lg" tone="light" />
+              </span>
             </a>
-            <p className="mt-6 max-w-sm text-[0.92rem] leading-[1.9] text-muted">{siteConfig.description}</p>
+            <p className="mt-6 hidden max-w-sm text-[0.92rem] leading-[1.9] text-white/70 md:block">{siteConfig.description}</p>
           </div>
 
           <div>
-            <h2 className="font-sans text-eyebrow font-bold uppercase text-ink">Navegue</h2>
-            <ul className="mt-5 space-y-3">
+            <h2 className="font-sans text-eyebrow font-bold uppercase text-orange">Navegue</h2>
+            <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2.5 md:mt-5 md:block md:space-y-3">
               {footerNavigation.map((item) => (
                 <li key={item.href + item.label}>
-                  <a href={item.href} className="text-[0.92rem] text-muted transition-colors hover:text-purple">
+                  <a href={item.href} className="text-[0.85rem] text-white/75 transition-colors hover:text-white md:text-[0.92rem]">
                     {item.label}
                   </a>
                 </li>
@@ -30,10 +36,10 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h2 className="font-sans text-eyebrow font-bold uppercase text-ink">Fale com a gente</h2>
-            <ul className="mt-5 space-y-3 text-[0.92rem] leading-relaxed text-muted">
+            <h2 className="font-sans text-eyebrow font-bold uppercase text-orange">Fale com a gente</h2>
+            <ul className="mt-4 space-y-2 text-[0.85rem] leading-relaxed text-white/75 md:mt-5 md:space-y-3 md:text-[0.92rem]">
               <li>
-                <a href={`mailto:${siteConfig.email}`} className="transition-colors hover:text-purple">
+                <a href={`mailto:${siteConfig.email}`} className="transition-colors hover:text-white">
                   {siteConfig.email}
                 </a>
               </li>
@@ -44,11 +50,11 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-line pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col items-center gap-2 border-t border-white/15 pt-5 text-center text-[0.7rem] text-white/55 sm:flex-row sm:items-center sm:justify-between sm:text-left md:mt-14 md:gap-3 md:pt-6 md:text-xs">
           <p>
             © {siteConfig.year} {siteConfig.name}. Todos os direitos reservados.
           </p>
-          <p className="font-logo text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-purple-strong">
+          <p className="font-logo text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-rose">
             {siteConfig.tagline}
           </p>
         </div>

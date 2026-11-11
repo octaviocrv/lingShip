@@ -5,7 +5,7 @@ import { faq, faqSection } from "@/content/faq";
 /** Perguntas frequentes em acordeão nativo (details/summary): funciona sem JavaScript. */
 export function Faq() {
   return (
-    <section id="duvidas" className="py-20 sm:py-24 lg:py-28">
+    <section id="duvidas" className="py-14 sm:py-24 lg:py-28">
       <Container className="max-w-[960px]">
         <div data-reveal>
           <Eyebrow>{faqSection.eyebrow}</Eyebrow>

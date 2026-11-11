@@ -1,6 +1,45 @@
 import type { LucideIcon } from "lucide-react";
 import { BadgeCheck, CalendarDays, Clock, MessagesSquare, Presentation } from "lucide-react";
 
+/** Verbete de dicionário que abre o hero do celular. */
+export const heroEntry = {
+  word: "ling·ship",
+  phonetic: "/ˈlɪŋ.ʃɪp/",
+  pos: "subst.",
+  senses: ["Plataforma de aprendizagem de inglês em comunidade.", "Possibilities through language."],
+};
+
+/** Fichas de vocabulário do hero do celular ("Expressão do dia"). */
+export const heroExpressions = {
+  label: "Expressão do dia",
+  items: [
+    {
+      phrase: "Break the ice",
+      phonetic: "/breɪk ði aɪs/",
+      meaning: "Quebrar o gelo: puxar conversa e deixar o clima leve.",
+      example: "A good question can break the ice in any meeting.",
+    },
+    {
+      phrase: "Speak your mind",
+      phonetic: "/spiːk jɔːr maɪnd/",
+      meaning: "Dizer o que você pensa, com sinceridade.",
+      example: "In our community, you can always speak your mind.",
+    },
+    {
+      phrase: "Get the hang of it",
+      phonetic: "/ɡet ðə hæŋ ʌv ɪt/",
+      meaning: "Pegar o jeito de alguma coisa.",
+      example: "Keep practicing and you will get the hang of it.",
+    },
+    {
+      phrase: "Food for thought",
+      phonetic: "/fuːd fər θɔːt/",
+      meaning: "Algo que dá o que pensar.",
+      example: "Today's live class gave me food for thought.",
+    },
+  ],
+};
+
 export const hero = {
   eyebrow: "Plataforma de aprendizagem de inglês em comunidade",
   title: ["Se comunique bem,", "em comunidade."],

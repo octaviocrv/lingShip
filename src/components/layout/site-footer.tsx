@@ -7,10 +7,10 @@ import { footerContact } from "@/content/contato";
 export function SiteFooter() {
   return (
     <footer className="bg-midnight text-white/70">
-      {/* no celular o rodapé é compacto: logo menor, sem a descrição, links em duas colunas */}
-      <Container className="pb-8 pt-10 md:pb-10 md:pt-20">
+      {/* no celular o rodapé é o básico: logo, e-mail e direitos, tudo centralizado */}
+      <Container className="pb-6 pt-8 md:pb-10 md:pt-20">
         <div className="grid gap-8 md:grid-cols-[1.3fr_1fr_1.1fr] md:gap-12">
-          <div>
+          <div className="max-md:flex max-md:flex-col max-md:items-center">
             <a href="#inicio" aria-label="Lingship, voltar ao início" className="inline-block">
               <span className="md:hidden">
                 <Logo tone="light" />
@@ -20,9 +20,12 @@ export function SiteFooter() {
               </span>
             </a>
             <p className="mt-6 hidden max-w-sm text-[0.92rem] leading-[1.9] text-white/70 md:block">{siteConfig.description}</p>
+            <a href={`mailto:${siteConfig.email}`} className="mt-3 text-[0.8rem] text-white/70 md:hidden">
+              {siteConfig.email}
+            </a>
           </div>
 
-          <div>
+          <div className="hidden md:block">
             <h2 className="font-sans text-eyebrow font-bold uppercase text-orange">Navegue</h2>
             <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2.5 md:mt-5 md:block md:space-y-3">
               {footerNavigation.map((item) => (
@@ -35,7 +38,7 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          <div>
+          <div className="hidden md:block">
             <h2 className="font-sans text-eyebrow font-bold uppercase text-orange">Fale com a gente</h2>
             <ul className="mt-4 space-y-2 text-[0.85rem] leading-relaxed text-white/75 md:mt-5 md:space-y-3 md:text-[0.92rem]">
               <li>
@@ -50,11 +53,11 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col items-center gap-2 border-t border-white/15 pt-5 text-center text-[0.7rem] text-white/55 sm:flex-row sm:items-center sm:justify-between sm:text-left md:mt-14 md:gap-3 md:pt-6 md:text-xs">
+        <div className="mt-6 flex flex-col items-center gap-2 border-t border-white/15 pt-4 text-center text-[0.7rem] text-white/55 sm:flex-row sm:items-center sm:justify-between sm:text-left md:mt-14 md:gap-3 md:pt-6 md:text-xs">
           <p>
             © {siteConfig.year} {siteConfig.name}. Todos os direitos reservados.
           </p>
-          <p className="font-logo text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-rose">
+          <p className="hidden font-logo text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-rose md:block">
             {siteConfig.tagline}
           </p>
         </div>

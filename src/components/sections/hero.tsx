@@ -26,7 +26,7 @@ export function Hero() {
           Desktop: duas colunas com territórios fixos. A do texto nunca fica abaixo de 28rem;
           a do palco (foto + cards) é flexível. Nenhuma das duas invade a outra.
         */}
-        <Container className="relative grid items-center gap-16 pb-20 pt-10 sm:pb-28 sm:pt-14 lg:grid-cols-[minmax(28rem,0.9fr)_minmax(0,1.2fr)] lg:gap-[clamp(2rem,4vw,5rem)] lg:pb-16 lg:pt-4">
+        <Container className="relative hidden items-center gap-16 lg:grid pb-20 pt-10 sm:pb-28 sm:pt-14 lg:grid-cols-[minmax(28rem,0.9fr)_minmax(0,1.2fr)] lg:gap-[clamp(2rem,4vw,5rem)] lg:pb-16 lg:pt-4">
           {/* Texto: é um container, então o título escala pela largura da própria coluna */}
           <div className="@container min-w-0">
             <div data-intro>
@@ -190,6 +190,164 @@ export function Hero() {
               </div>
             </div>
           </div>
+        </Container>
+
+        {/*
+          HERO DO CELULAR E TABLET (abaixo de 1024px). Ordem pensada para a tela em pé:
+          rótulo em pílula, título, a foto em arco com 3 selos curtos (sem textos espremidos)
+          e a barra "Aula ao vivo" sobre a base da foto, depois o texto, os botões e os destaques
+          numa faixa que desliza. O hero do desktop (acima) não muda.
+        */}
+        <Container className="relative pb-16 pt-6 sm:pb-24 sm:pt-10 lg:hidden">
+          <div data-intro className="flex">
+            <span className="glass-flat inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[0.6rem] font-bold uppercase tracking-[0.18em] text-purple">
+              <span className="relative flex size-1.5">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-orange opacity-60" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-orange" />
+              </span>
+              {hero.eyebrow}
+            </span>
+          </div>
+
+          <h1
+            data-intro
+            style={{ "--intro-delay": "100ms" } as CSSProperties}
+            className="mt-5 text-[clamp(2.15rem,1.2rem+4.6vw,3.4rem)] font-semibold leading-[1.08] tracking-[-0.015em]"
+          >
+            <span className="block text-orange-deep">{hero.title[0]}</span>
+            <span className="block text-midnight">{hero.title[1]}</span>
+          </h1>
+          <p
+            data-intro
+            style={{ "--intro-delay": "160ms" } as CSSProperties}
+            className="mt-3 font-logo text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-purple"
+          >
+            {siteConfig.tagline}
+          </p>
+
+          {/* Foto em arco + selos */}
+          <div
+            data-intro="zoom"
+            style={{ "--intro-delay": "220ms" } as CSSProperties}
+            className="relative mx-auto mt-8 w-full max-w-[24rem]"
+          >
+            <div className="relative aspect-[4/5] overflow-hidden rounded-t-[999px] rounded-b-[2rem] bg-ink shadow-soft">
+              <Image
+                src={hero.photo.src}
+                alt={hero.photo.alt}
+                fill
+                priority
+                quality={85}
+                sizes="(min-width: 640px) 384px, 92vw"
+                className="object-cover object-[50%_35%]"
+              />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-2.5 rounded-t-[999px] rounded-b-[1.6rem] border border-white/25"
+              />
+              {/* escurece a base para a barra de vidro ler bem */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-midnight/45 to-transparent"
+              />
+            </div>
+
+            {/* selo: método */}
+            <div className="glass absolute left-2 top-[18%] flex animate-float items-center gap-2 rounded-full py-1.5 pl-1.5 pr-3.5">
+              <span className="grid size-8 place-items-center rounded-full bg-purple text-white">
+                <method.icon className="size-4" aria-hidden />
+              </span>
+              <span className="leading-tight">
+                <span className="block text-[0.78rem] font-bold text-ink">{method.title}</span>
+                <span className="block text-[0.6rem] text-muted">{method.label}</span>
+              </span>
+            </div>
+
+            {/* selo: chat */}
+            <span
+              aria-label={bubble.label}
+              role="img"
+              className="absolute right-3 top-[6%] grid size-11 animate-float place-items-center rounded-2xl bg-orange text-midnight shadow-button [animation-delay:-2s]"
+            >
+              <bubble.icon className="size-5" aria-hidden />
+            </span>
+
+            {/* selo: palco */}
+            <div className="glass absolute right-2 top-[46%] flex max-w-[62%] animate-float items-center gap-2 rounded-full py-1.5 pl-1.5 pr-3 [animation-delay:-4s]">
+              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-coral text-white">
+                <stage.icon className="size-4" aria-hidden />
+              </span>
+              <span className="truncate text-[0.72rem] font-bold text-ink">{stage.title}</span>
+              <stage.check className="size-3.5 shrink-0 text-purple" aria-hidden />
+            </div>
+
+            {/* barra: aula ao vivo */}
+            <div className="glass absolute inset-x-3 bottom-3 flex items-center gap-3 rounded-2xl p-2.5 pr-3">
+              <span className="relative size-10 shrink-0 overflow-hidden rounded-full ring-2 ring-white">
+                <Image src={hero.photo.src} alt="" fill sizes="40px" className="object-cover object-[50%_25%]" />
+              </span>
+              <span className="min-w-0 flex-1 leading-tight">
+                <span className="flex items-center gap-1.5 text-[0.54rem] font-bold uppercase tracking-[0.18em] text-ink/70">
+                  <span className="size-1.5 rounded-full bg-orange" />
+                  {live.eyebrow}
+                </span>
+                <span className="mt-0.5 block truncate text-[0.84rem] font-bold text-ink">{live.title}</span>
+                <span className="block truncate text-[0.68rem] text-muted">{live.label}</span>
+              </span>
+              <a
+                href={live.cta.href}
+                className="shrink-0 rounded-full bg-purple px-3.5 py-2 text-[0.7rem] font-semibold text-white transition-colors active:bg-purple-deep"
+              >
+                Participar
+              </a>
+            </div>
+          </div>
+
+          <p
+            data-intro
+            style={{ "--intro-delay": "300ms" } as CSSProperties}
+            className="mt-8 text-[0.98rem] leading-[1.8] text-muted"
+          >
+            {hero.lead.before}
+            <strong className="font-semibold text-ink">{hero.lead.strong}</strong>
+            {hero.lead.after}
+          </p>
+
+          <div
+            data-intro
+            style={{ "--intro-delay": "360ms" } as CSSProperties}
+            className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center"
+          >
+            <LinkButton href={hero.primaryCta.href} size="lg" className="w-full sm:w-auto">
+              {hero.primaryCta.label}
+            </LinkButton>
+            <a
+              href={hero.secondaryCta.href}
+              className="glass-flat inline-flex h-14 items-center justify-center gap-3 rounded-full px-6 font-medium text-ink"
+            >
+              <span className="grid size-8 place-items-center rounded-full bg-white shadow-[0_8px_20px_rgb(43_33_64/0.14)]">
+                <Play className="ml-0.5 size-3.5 fill-purple text-purple" aria-hidden />
+              </span>
+              <span className="text-[0.92rem]">{hero.secondaryCta.label}</span>
+            </a>
+          </div>
+
+          {/* destaques em faixa que desliza */}
+          <ul
+            data-intro
+            style={{ "--intro-delay": "420ms" } as CSSProperties}
+            className="no-scrollbar -mx-5 mt-7 flex gap-2.5 overflow-x-auto px-5 sm:-mx-8 sm:px-8"
+          >
+            {hero.highlights.map(({ icon: Icon, label }) => (
+              <li
+                key={label}
+                className="glass-flat flex shrink-0 items-center gap-2 rounded-full px-3.5 py-2 text-[0.76rem] font-medium text-ink/85"
+              >
+                <Icon className="size-4 text-orange" aria-hidden />
+                {label}
+              </li>
+            ))}
+          </ul>
         </Container>
       </div>
     </section>

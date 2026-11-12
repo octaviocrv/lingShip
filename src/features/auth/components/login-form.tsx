@@ -14,6 +14,12 @@ import type { AuthResult, SocialProvider } from "../types";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
+ * DEMONSTRAÇÃO: o login não valida nada; "Entrar" leva direto para a plataforma (mesmo com os
+ * campos vazios). Quando houver autenticação real, trocar para `true` e ajustar o authService.
+ */
+const VALIDATE_FIELDS = false;
+
+/**
  * Escala do formulário. Tudo é múltiplo de --auth-fs (corpo do texto, fluido) e mantém a
  * proporção da referência: campo 3,3x a altura do texto, raio ~1x, etc. Espaços verticais
  * usam --s (passo que encolhe em telas baixas). Ver "auth-scale" em globals.css.
@@ -34,8 +40,8 @@ type Errors = { email?: string; password?: string };
 
 /**
  * Formulário de login (lado direito da referência). A autenticação real ainda não existe:
- * o envio passa pelo `authService`, que hoje só avisa que a plataforma está sendo preparada.
- * Quando houver backend, basta o serviço devolver `{ ok: true, redirectTo }`.
+ * na demonstração, o `authService` leva direto para a plataforma e os campos não são
+ * validados (VALIDATE_FIELDS). Quando houver backend, ligar a validação e o serviço real.
  */
 export function LoginForm() {
   const { form, errors: messages } = loginContent;
@@ -68,11 +74,13 @@ export function LoginForm() {
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const found = validate();
-    setErrors(found);
-    if (found.email || found.password) {
-      document.getElementById(found.email ? "login-email" : "login-senha")?.focus();
-      return;
+    if (VALIDATE_FIELDS) {
+      const found = validate();
+      setErrors(found);
+      if (found.email || found.password) {
+        document.getElementById(found.email ? "login-email" : "login-senha")?.focus();
+        return;
+      }
     }
     void handle(() => authService.signIn({ email: email.trim(), password }));
   };

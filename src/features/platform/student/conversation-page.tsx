@@ -1,17 +1,12 @@
 import type { ReactNode } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
   BookOpen,
-  Captions,
   Clock,
   Eye,
-  Gauge,
   HeartHandshake,
   Lightbulb,
-  Lock,
-  Play,
   Sparkles,
   Telescope,
 } from "lucide-react";
@@ -32,6 +27,7 @@ import { AccessPill, ConversationCard, formatIcon } from "../components/conversa
 import { SaveButton } from "../components/save-button";
 import { Btn, BtnLink, Card, CardHeader, IconTile, Illustrative, Pill } from "../components/ui";
 import { PracticeForm } from "./practice-form";
+import { VideoPlayer } from "./components/video-player";
 
 const s = routes.platform.student;
 
@@ -66,51 +62,13 @@ export function ConversationPage({ conversation: c }: { conversation: Conversati
               <p className="mt-3 text-[1rem] italic text-muted">{c.hook}</p>
             </div>
 
-            <div className="relative mx-3 mb-3 aspect-video overflow-hidden rounded-[calc(var(--radius-box)-0.5rem)] bg-midnight lg:mx-4 lg:mb-4">
-              <Image
-                src={c.format === "Vídeo" ? "/images/platform/vanessa-video.webp" : c.cover}
-                alt=""
-                fill
-                priority
-                sizes="(min-width: 1280px) 60vw, 95vw"
-                className={cn("object-cover", locked && "opacity-60 blur-[2px]")}
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgb(21_13_44/0.65))]" />
-              <div className="absolute inset-0 grid place-items-center">
-                {locked ? (
-                  <div className="flex flex-col items-center text-center text-snow">
-                    <span className="grid size-16 place-items-center rounded-full bg-card/20 backdrop-blur">
-                      <Lock aria-hidden className="size-7" />
-                    </span>
-                    <p className="mt-3 text-[0.95rem] font-semibold">Conversa avulsa · {brl((c.access as { price: number }).price)}</p>
-                  </div>
-                ) : (
-                  <button
-                    type="button"
-                    aria-label="Reproduzir conversa (demonstração)"
-                    className="grid size-18 cursor-pointer place-items-center rounded-full bg-snow/95 text-purple shadow-[0_12px_40px_rgb(0_0_0/0.3)] transition hover:scale-105"
-                  >
-                    <Play aria-hidden className="ml-1 size-7 fill-current" />
-                  </button>
-                )}
-              </div>
-              <div className="absolute inset-x-4 bottom-3.5 flex items-center gap-2 text-[0.74rem] font-medium text-snow/90 lg:inset-x-5">
-                <span className="inline-flex items-center gap-1.5">
-                  <FormatIcon aria-hidden className="size-3.5" />
-                  {c.format} · {c.minutes} min
-                </span>
-                <span className="ml-auto flex gap-1.5">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-black/30 px-2 py-1 backdrop-blur">
-                    <Captions aria-hidden className="size-3.5" />
-                    Legenda revisada
-                  </span>
-                  <span className="hidden items-center gap-1 rounded-full bg-black/30 px-2 py-1 backdrop-blur sm:inline-flex">
-                    <Gauge aria-hidden className="size-3.5" />
-                    1x
-                  </span>
-                </span>
-              </div>
-            </div>
+            <VideoPlayer
+              poster={c.cover}
+              icon={FormatIcon}
+              label={`${c.format} · ${c.minutes} min`}
+              locked={locked ? `Conversa avulsa · ${brl((c.access as { price: number }).price)}` : undefined}
+              className="mx-3 mb-3 lg:mx-4 lg:mb-4"
+            />
           </Card>
 
           <Block icon={Telescope} title="A cena">
@@ -250,9 +208,20 @@ export function ConversationPage({ conversation: c }: { conversation: Conversati
               <IconTile icon={BookOpen} tone="dark" />
               <p className="mt-4 text-[0.78rem] font-semibold text-purple">Esta conversa faz parte do curso</p>
               <p className="mt-1 font-serif text-[1.1rem] font-semibold leading-snug text-midnight">{inCourse.title}</p>
-              <BtnLink href={s.course(inCourse.slug)} variant="dark" size="sm" className="mt-4">
-                Ver o curso
-              </BtnLink>
+              {student.courses.includes(inCourse.slug) ? (
+                <BtnLink
+                  href={s.lesson(inCourse.slug, inCourse.lessons.findIndex((l) => l.conversation === c.slug) + 1)}
+                  variant="dark"
+                  size="sm"
+                  className="mt-4"
+                >
+                  Abrir como aula {inCourse.lessons.findIndex((l) => l.conversation === c.slug) + 1} do curso
+                </BtnLink>
+              ) : (
+                <BtnLink href={s.course(inCourse.slug)} variant="dark" size="sm" className="mt-4">
+                  Ver o curso
+                </BtnLink>
+              )}
             </Card>
           )}
         </aside>

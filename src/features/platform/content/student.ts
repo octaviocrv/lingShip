@@ -12,24 +12,21 @@ export const student = {
   phone: "(31) 90000-0000",
   plan: "Materiais Exclusivos",
   since: "agosto de 2026",
-  /** cursos que ela comprou */
-  courses: ["enriquecer-minhas-conversas"],
+  /** cursos que ela comprou (o primeiro é o que ela estudou por último) */
+  courses: ["enriquecer-minhas-conversas", "ler-livros-em-ingles"],
   /** conversas avulsas compradas */
   purchased: [] as string[],
-  /** progresso no curso: aulas concluídas (índices) */
+  /**
+   * Progresso em cada curso. `completed` são as aulas concluídas (índice na sequência do
+   * curso); `next` é a aula recomendada. Não há bloqueio: a progressão não é linear.
+   */
   courseProgress: {
-    "enriquecer-minhas-conversas": { done: 3, reflections: 4, productions: 2 },
-  } as Record<string, { done: number; reflections: number; productions: number }>,
+    "enriquecer-minhas-conversas": { completed: [0, 1, 2], next: 3, reflections: 4, productions: 2, lastSeen: "ontem" },
+    "ler-livros-em-ingles": { completed: [0], next: 1, reflections: 1, productions: 1, lastSeen: "há 5 dias" },
+  } as Record<string, { completed: number[]; next: number; reflections: number; productions: number; lastSeen: string }>,
   saved: ["ser-mais-descritivo", "falar-da-minha-area", "ler-um-livro", "deu-branco"],
   watched: ["sair-do-good-e-very-well", "parar-de-me-cobrar", "ser-mais-descritivo"],
 };
-
-export const studentStats = [
-  { label: "Conversas vistas", value: "14", note: "6 neste mês" },
-  { label: "Produções registradas", value: "5", note: "2 áudios novos" },
-  { label: "Conversas salvas", value: "8", note: "para retomar" },
-  { label: "Encontros ao vivo", value: "3", note: "desde agosto" },
-];
 
 /** Entrada da home: "o que acontece com você quando tenta usar inglês?" (seção IV). */
 export const situationPrompts: { text: string; situation: SituationId; conversation: string }[] = [
@@ -39,6 +36,12 @@ export const situationPrompts: { text: string; situation: SituationId; conversat
   { text: "Me cobro demais", situation: "confianca", conversation: "parar-de-me-cobrar" },
   { text: "Dá branco no meio da frase", situation: "confianca", conversation: "deu-branco" },
   { text: "Não acompanho filmes e séries", situation: "filmes", conversation: "filme-sem-legenda" },
+];
+
+/** Próximos encontros (agenda do aluno). Temas ilustrativos. */
+export const upcomingMeetings = [
+  { when: "Qui, 27 nov", time: "19h às 20h", title: "Encontro ao vivo do mês", theme: "[Exemplo] Contar histórias de fim de ano", kind: "Ao vivo" as const },
+  { when: "Qui, 18 dez", time: "19h às 20h", title: "Encontro ao vivo do mês", theme: "Tema a definir pela Vanessa", kind: "Ao vivo" as const },
 ];
 
 export const liveMeeting = {
@@ -109,6 +112,7 @@ export const journeyTimeline = [
 
 export const purchases = [
   { id: "#LS-10482", date: "05/11/2026", item: "Assinatura Materiais Exclusivos", kind: "Assinatura", value: 34.99, method: "Cartão final 4821" },
+  { id: "#LS-10301", date: "20/10/2026", item: "Curso: Como ler livros em inglês?", kind: "Curso", value: 150, method: "Pix" },
   { id: "#LS-10217", date: "05/10/2026", item: "Assinatura Materiais Exclusivos", kind: "Assinatura", value: 34.99, method: "Cartão final 4821" },
   { id: "#LS-10133", date: "02/10/2026", item: "Curso: Como enriquecer minhas conversas?", kind: "Curso", value: 150, method: "Pix" },
   { id: "#LS-09871", date: "05/09/2026", item: "Assinatura Materiais Exclusivos", kind: "Assinatura", value: 34.99, method: "Cartão final 4821" },

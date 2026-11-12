@@ -428,7 +428,18 @@ export function illustrativeBody(c: Conversation) {
 
 /* Cursos */
 
-export type CourseLesson = { question: string; conversation?: string; practice?: string };
+export type CourseLesson = {
+  question: string;
+  conversation?: string;
+  practice?: string;
+  /** duração da aula; nas ligadas a uma conversa, vale a duração da conversa */
+  minutes?: number;
+  /** linha de apoio na lista de aulas (o que acontece nessa aula) */
+  summary?: string;
+};
+
+/** Módulo: um grupo de aulas-pergunta em torno de um mesmo movimento do curso. */
+export type CourseModule = { title: string; summary: string; lessons: CourseLesson[] };
 
 export type Course = {
   slug: string;
@@ -441,11 +452,15 @@ export type Course = {
   forWho: string;
   today: string;
   after: string;
+  modules: CourseModule[];
+  /** todas as aulas em sequência (derivado dos módulos; o painel da professora usa esta lista) */
   lessons: CourseLesson[];
 };
 
+const defineCourse = (c: Omit<Course, "lessons">): Course => ({ ...c, lessons: c.modules.flatMap((m) => m.lessons) });
+
 export const courses: Course[] = [
-  {
+  defineCourse({
     slug: "enriquecer-minhas-conversas",
     title: "Como enriquecer minhas conversas?",
     cover: cover("cafe"),
@@ -456,18 +471,42 @@ export const courses: Course[] = [
     forWho: "Para quem já conversa em inglês, mas sente que as respostas ficam curtas e a troca não flui.",
     today: "Respostas curtas, sempre as mesmas palavras e conversas que acabam cedo.",
     after: "Conversas com detalhe, histórias contadas até o fim e trocas que continuam.",
-    lessons: [
-      { question: "O que eu já consigo dizer hoje?", practice: "Linha de base: áudio livre" },
-      { question: "Como sair do “good” e do “very well”?", conversation: "sair-do-good-e-very-well", practice: "Áudio" },
-      { question: "Como ser mais descritivo?", conversation: "ser-mais-descritivo", practice: "Texto" },
-      { question: "Como contar uma história sem perder o fio?", conversation: "contar-uma-historia", practice: "Relato" },
-      { question: "Como continuar a conversa depois do “and you?”", conversation: "continuar-a-conversa", practice: "Áudio" },
-      { question: "O que fazer quando dá branco no meio da frase?", conversation: "deu-branco" },
-      { question: "Como dar minha opinião sem soar rígido?", conversation: "opiniao-sem-soar-rigido", practice: "Áudio" },
-      { question: "O que mudou na minha conversa?", practice: "Produção final" },
+    modules: [
+      {
+        title: "Ponto de partida",
+        summary: "Onde suas conversas estão hoje.",
+        lessons: [
+          { question: "O que eu já consigo dizer hoje?", practice: "Linha de base: áudio livre", minutes: 6, summary: "Uma gravação livre para comparar no fim do curso." },
+          { question: "Como sair do “good” e do “very well”?", conversation: "sair-do-good-e-very-well", practice: "Áudio", summary: "Quando a resposta pronta encerra a conversa." },
+        ],
+      },
+      {
+        title: "Dar cor ao que você conta",
+        summary: "Detalhe, cena e história.",
+        lessons: [
+          { question: "Como ser mais descritivo?", conversation: "ser-mais-descritivo", practice: "Texto", summary: "Fazer quem ouve enxergar o que você viveu." },
+          { question: "Como contar uma história sem perder o fio?", conversation: "contar-uma-historia", practice: "Relato", summary: "Começo, meio e fim sem se perder no caminho." },
+        ],
+      },
+      {
+        title: "Manter a conversa viva",
+        summary: "Reagir, contornar e se posicionar.",
+        lessons: [
+          { question: "Como continuar a conversa depois do “and you?”", conversation: "continuar-a-conversa", practice: "Áudio", summary: "Perguntas de retorno que mantêm a troca." },
+          { question: "O que fazer quando dá branco no meio da frase?", conversation: "deu-branco", summary: "Seguir falando quando a palavra some." },
+          { question: "Como dar minha opinião sem soar rígido?", conversation: "opiniao-sem-soar-rigido", practice: "Áudio", minutes: 12, summary: "Concordar e discordar mantendo a conversa aberta." },
+        ],
+      },
+      {
+        title: "O que mudou",
+        summary: "Comparar o início e o fim.",
+        lessons: [
+          { question: "O que mudou na minha conversa?", practice: "Produção final", minutes: 8, summary: "Nova gravação e comparação com a linha de base." },
+        ],
+      },
     ],
-  },
-  {
+  }),
+  defineCourse({
     slug: "ler-livros-em-ingles",
     title: "Como ler livros em inglês?",
     cover: cover("leitura"),
@@ -478,15 +517,31 @@ export const courses: Course[] = [
     forWho: "Para quem quer ler por prazer, sem transformar cada página em exercício.",
     today: "Leitura interrompida, dicionário aberto o tempo todo e livros abandonados.",
     after: "Ler pelo sentido, escolher livros com autonomia e conversar sobre o que leu.",
-    lessons: [
-      { question: "Como eu leio hoje?", practice: "Linha de base: trecho lido em voz alta" },
-      { question: "Como ler um livro em inglês sem parar a cada palavra?", conversation: "ler-um-livro", practice: "Registro de leitura" },
-      { question: "Como escolher o próximo livro?" },
-      { question: "Como falar sobre o que eu li?", practice: "Áudio" },
-      { question: "O que mudou na minha leitura?", practice: "Produção final" },
+    modules: [
+      {
+        title: "Como você lê hoje",
+        summary: "Ponto de partida da leitura.",
+        lessons: [
+          { question: "Como eu leio hoje?", practice: "Linha de base: trecho lido em voz alta", minutes: 7, summary: "Um trecho lido em voz alta para comparar depois." },
+          { question: "Como ler um livro em inglês sem parar a cada palavra?", conversation: "ler-um-livro", practice: "Registro de leitura", summary: "Ler pelo sentido, não palavra por palavra." },
+        ],
+      },
+      {
+        title: "Escolher e seguir lendo",
+        summary: "Autonomia para o próximo livro.",
+        lessons: [{ question: "Como escolher o próximo livro?", minutes: 10, summary: "Critérios para escolher sem depender de lista pronta." }],
+      },
+      {
+        title: "Conversar sobre leitura",
+        summary: "Da página para a fala.",
+        lessons: [
+          { question: "Como falar sobre o que eu li?", practice: "Áudio", minutes: 11, summary: "Contar a história e dar sua opinião sobre ela." },
+          { question: "O que mudou na minha leitura?", practice: "Produção final", minutes: 8, summary: "Nova leitura em voz alta e comparação." },
+        ],
+      },
     ],
-  },
-  {
+  }),
+  defineCourse({
     slug: "autonomia-e-naturalidade",
     title: "Como construir mais autonomia e naturalidade em inglês?",
     cover: cover("estudo"),
@@ -497,15 +552,25 @@ export const courses: Course[] = [
     forWho: "Para quem quer continuar evoluindo sem depender de aula ou correção o tempo todo.",
     today: "Dependência de correção e insegurança para praticar sozinho.",
     after: "Saber observar a própria fala e escolher o próximo passo.",
-    lessons: [
-      { question: "Onde eu dependo de alguém hoje?", practice: "Linha de base" },
-      { question: "Como parar de me cobrar o inglês perfeito?", conversation: "parar-de-me-cobrar" },
-      { question: "Como observar minha própria fala?" },
+    modules: [
+      {
+        title: "Ponto de partida",
+        summary: "Onde você depende de alguém.",
+        lessons: [
+          { question: "Onde eu dependo de alguém hoje?", practice: "Linha de base", minutes: 6 },
+          { question: "Como parar de me cobrar o inglês perfeito?", conversation: "parar-de-me-cobrar" },
+          { question: "Como observar minha própria fala?", minutes: 10 },
+        ],
+      },
     ],
-  },
+  }),
 ];
 
 export const getCourse = (slug: string) => courses.find((c) => c.slug === slug);
+
+/** Duração da aula: a da conversa ligada ou a definida na aula. */
+export const lessonMinutes = (lesson: CourseLesson) =>
+  (lesson.conversation ? getConversation(lesson.conversation)?.minutes : undefined) ?? lesson.minutes ?? 10;
 
 /** Ofertas (preços do protótipo do site, ilustrativos). */
 export const offers = {

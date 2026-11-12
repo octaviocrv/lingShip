@@ -22,6 +22,8 @@ export const routes = {
       conversation: (slug: string) => `${student}/conversas/${slug}`,
       courses: `${student}/cursos`,
       course: (slug: string) => `${student}/cursos/${slug}`,
+      /** aula do curso; `number` começa em 1 ("Aula 4") */
+      lesson: (slug: string, number: number) => `${student}/cursos/${slug}/aulas/${number}`,
       journey: `${student}/percurso`,
       mentoring: `${student}/mentoria`,
       purchases: `${student}/compras`,

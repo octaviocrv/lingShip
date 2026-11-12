@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
-import { CalendarDays } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { routes } from "@/config/routes";
 import { PlatformShell } from "@/features/platform/components/shell/platform-shell";
 import { BtnLink } from "@/features/platform/components/ui";
-import { liveMeeting, student } from "@/features/platform/content/student";
+import { student } from "@/features/platform/content/student";
 
 /** Área do aluno. */
 export default function StudentLayout({ children }: { children: ReactNode }) {
@@ -15,33 +15,36 @@ export default function StudentLayout({ children }: { children: ReactNode }) {
       searchAction={routes.platform.student.conversations}
       searchPlaceholder="Busque com suas palavras: “como sair do good”"
       user={{ name: student.name, role: student.plan, initials: student.initials }}
-      sidebarFooter={<LiveCard />}
+      sidebarFooter={<MentoringCard />}
     >
       {children}
     </PlatformShell>
   );
 }
 
-/** Cartão do encontro ao vivo no pé da barra lateral (o "Upgrade to Pro" da referência). */
-function LiveCard() {
+/**
+ * Convite da mentoria no pé da barra lateral (o "Level up" da referência). Os encontros ao
+ * vivo ficam só na home, para a informação não se repetir.
+ */
+function MentoringCard() {
   return (
-    <div className="overflow-hidden rounded-box bg-lilac">
-      <div className="relative h-24">
-        <Image src={liveMeeting.photo} alt="Vanessa em sala de aula" fill sizes="224px" className="object-cover object-[50%_30%]" />
-        <span className="absolute left-3 top-3 rounded-full bg-midnight/85 px-2.5 py-1 text-[0.66rem] font-semibold text-snow">
-          Ao vivo
-        </span>
-      </div>
-      <div className="p-4">
-        <p className="font-serif text-[1rem] font-semibold leading-snug text-midnight">Encontro do mês com a Vanessa</p>
-        <p className="mt-1.5 flex items-center gap-1.5 text-[0.76rem] text-ink">
-          <CalendarDays aria-hidden className="size-3.5 text-purple" />
-          {liveMeeting.date.replace("Qui, ", "")} · 19h
-        </p>
-        <BtnLink href={routes.platform.student.home} size="sm" className="mt-3.5 w-full">
-          Garantir meu lugar
-        </BtnLink>
-      </div>
+    <div className="relative overflow-hidden rounded-box bg-midnight p-5 text-snow">
+      <Image
+        src="/images/platform/vanessa-avatar.webp"
+        alt=""
+        width={48}
+        height={48}
+        className="size-12 rounded-full object-cover ring-2 ring-orange"
+      />
+      <span aria-hidden className="absolute -right-5 -top-9 font-logo text-[7rem] leading-none text-orange/20">
+        ”
+      </span>
+      <p className="relative mt-4 font-serif text-[1.05rem] font-semibold leading-snug">Quer um olhar individual?</p>
+      <p className="relative mt-1.5 text-[0.78rem] leading-relaxed text-snow/70">Na mentoria, a Vanessa acompanha suas produções de perto.</p>
+      <BtnLink href={routes.platform.student.mentoring} size="sm" className="relative mt-4 w-full">
+        Conhecer a mentoria
+        <ArrowRight aria-hidden />
+      </BtnLink>
     </div>
   );
 }

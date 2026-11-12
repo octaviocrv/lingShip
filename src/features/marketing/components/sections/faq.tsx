@@ -1,6 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { Container, Eyebrow } from "@/components/ui/primitives";
-import { faq, faqSection } from "@/content/faq";
+import { faq, faqSection } from "@/features/marketing/content/faq";
 
 /** Perguntas frequentes em acordeão nativo (details/summary): funciona sem JavaScript. */
 export function Faq() {

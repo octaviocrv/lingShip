@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     locale: siteConfig.locale,
     type: "website",
-    images: [{ url: "/fotos/vanessa-hero-cafe.jpg" }],
+    images: [{ url: "/images/site/vanessa-hero-cafe.jpg" }],
   },
   // Versão em validação: não indexar até a Vanessa aprovar.
   robots: { index: false, follow: false },
@@ -49,16 +49,10 @@ export const viewport: Viewport = {
   themeColor: "#faf7f4",
 };
 
-// Roda antes da primeira pintura: marca que há JS (só então os [data-reveal] começam ocultos).
-// Também: ao recarregar, a página sempre volta ao topo (sem restaurar a rolagem nem pular para
-// a âncora da URL) e liga a abertura ("splash") quando o visitante não pediu menos movimento.
-const HEAD_SCRIPT = [
-  `var d=document.documentElement;d.classList.add("js");`,
-  `try{history.scrollRestoration="manual"}catch(e){}`,
-  `if(location.hash){history.replaceState(null,"",location.pathname+location.search)}`,
-  `window.scrollTo(0,0);`,
-  `if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){d.classList.add("splash")}`,
-].join("");
+// Roda antes da primeira pintura, em todas as páginas: marca que há JS (só então os
+// [data-reveal] começam ocultos). O que é só da home (abertura, voltar ao topo) fica em
+// app/(site)/layout.tsx.
+const HEAD_SCRIPT = `document.documentElement.classList.add("js");`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

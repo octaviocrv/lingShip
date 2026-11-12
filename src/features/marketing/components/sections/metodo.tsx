@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { Carousel, GRID_LG } from "@/components/ui/carousel";
+import { Carousel } from "@/components/ui/carousel";
+import { GRID_LG } from "@/components/ui/carousel-grid";
 import { Container, IconBadge, LinkButton, SectionHeading } from "@/components/ui/primitives";
 import { cn } from "@/lib/cn";
-import { metodoSection, passos } from "@/content/metodo";
+import { metodoSection, passos } from "@/features/marketing/content/metodo";
 
 export function Metodo() {
   return (

@@ -6,17 +6,13 @@ import { cn } from "@/lib/cn";
 import { lofi } from "@/lib/lofi";
 
 /**
- * A partir de 1024px (lg) o trilho volta a ser grade: some com rolagem, margens e espaçamentos
- * do celular. Juntar com as colunas da seção, ex.: cn(GRID_LG, "lg:grid-cols-4").
- */
-export const GRID_LG = "lg:mx-0 lg:grid lg:gap-5 lg:overflow-visible lg:px-0 lg:pb-0 lg:pt-0 lg:snap-none";
-
-/**
- * Carrossel para o celular e o tablet: desliza com o dedo e para cada cartão no centro
- * (scroll-snap). No celular o cartão do centro fica em destaque e os vizinhos ficam menores e
- * mais apagados, aparecendo na borda para convidar a deslizar. Embaixo: pontos (o ativo vira
- * uma pílula laranja), contador e setas. No desktop (lg+) os controles somem e o layout é o
- * que a seção definir em `trackClassName` (grade com GRID_LG ou faixa horizontal).
+ * Carrossel só para o celular (abaixo de 640px): desliza com o dedo e para cada cartão no
+ * centro (scroll-snap). O cartão do centro fica em destaque e os vizinhos ficam menores e mais
+ * apagados, aparecendo na borda para convidar a deslizar. Embaixo: pontos (o ativo vira uma
+ * pílula laranja), contador e setas. Do tablet em diante (sm+) nada disso aparece: o layout é
+ * o do desktop, definido pela seção em `trackClassName` (grade com GRID_LG, de carousel-grid.ts,
+ * ou faixa horizontal). Numa faixa, `desktopArrows` mostra setas próprias do desktop, à direita,
+ * que passam um cartão por vez e somem quando tudo cabe na tela.
  */
 export function Carousel({
   children,
@@ -25,19 +21,24 @@ export function Carousel({
   trackClassName,
   slideClassName,
   reveal = "group",
+  desktopArrows = false,
 }: {
   children: ReactNode;
   label: string;
   className?: string;
   trackClassName?: string;
-  /** classes do slide no desktop; sem isso o slide ocupa a coluna da grade (lg:w-auto) */
+  /** classes do slide do tablet em diante; sem isso o slide ocupa a coluna da grade (sm:w-auto) */
   slideClassName?: string;
   /** "group": cartões entram em cascata; "block": a faixa entra inteira; "none": sem animação */
   reveal?: "group" | "block" | "none";
+  /** setas no tablet/desktop para faixas que deslizam (não usar com GRID_LG) */
+  desktopArrows?: boolean;
 }) {
   const items = Children.toArray(children);
   const track = useRef<HTMLUListElement>(null);
   const [active, setActive] = useState(0);
+  // bordas da faixa, para as setas do desktop
+  const [edge, setEdge] = useState({ start: true, end: true });
   const n = items.length;
 
   useEffect(() => {
@@ -62,6 +63,9 @@ export function Carousel({
       if (last !== -1 && best !== last) lofi.click();
       last = best;
       setActive(best);
+      const start = el.scrollLeft <= 4;
+      const end = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
+      setEdge((prev) => (prev.start === start && prev.end === end ? prev : { start, end }));
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
@@ -87,6 +91,16 @@ export function Carousel({
     });
   };
 
+  // desktop: anda um cartão (largura do cartão + espaço entre eles)
+  const step = (dir: 1 | -1) => {
+    const el = track.current;
+    const first = el?.children[0] as HTMLElement | undefined;
+    if (!el || !first) return;
+    const gap = parseFloat(getComputedStyle(el).columnGap) || 0;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollBy({ left: dir * (first.offsetWidth + gap), behavior: reduce ? "auto" : "smooth" });
+  };
+
   const revealAttr =
     reveal === "group" ? { "data-reveal-group": "" } : reveal === "block" ? { "data-reveal": "" } : {};
   const pad = (v: number) => String(v).padStart(2, "0");
@@ -98,7 +112,7 @@ export function Carousel({
         aria-label={label}
         {...revealAttr}
         className={cn(
-          "no-scrollbar relative -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-3 pt-1 sm:-mx-8 sm:gap-5 sm:px-8",
+          "no-scrollbar relative flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain max-sm:-mx-5 max-sm:gap-4 max-sm:px-5 max-sm:pb-3 max-sm:pt-1",
           trackClassName,
         )}
       >
@@ -109,9 +123,9 @@ export function Carousel({
             aria-roledescription="slide"
             aria-label={`${i + 1} de ${n}`}
             className={cn(
-              "group/slide flex w-[84%] shrink-0 snap-center sm:w-[46%]",
-              // na grade do desktop a largura vem da coluna; uma seção pode trocar isso
-              slideClassName ?? "lg:w-auto",
+              "group/slide flex w-[84%] shrink-0 snap-center",
+              // na grade (tablet e desktop) a largura vem da coluna; uma seção pode trocar isso
+              slideClassName ?? "sm:w-auto",
             )}
           >
             {/* destaque do cartão central só no celular */}
@@ -123,7 +137,7 @@ export function Carousel({
       </ul>
 
       {n > 1 && (
-        <div className="mt-5 flex items-center justify-between gap-4 lg:hidden">
+        <div className="mt-5 flex items-center justify-between gap-4 sm:hidden">
           <div className="flex items-center gap-1.5">
             {items.map((_, i) => (
               <button
@@ -163,6 +177,29 @@ export function Carousel({
               <ChevronRight className="size-5" aria-hidden />
             </button>
           </div>
+        </div>
+      )}
+
+      {desktopArrows && !(edge.start && edge.end) && (
+        <div className="mt-6 hidden items-center justify-end gap-2.5 sm:flex">
+          <button
+            type="button"
+            onClick={() => step(-1)}
+            disabled={edge.start}
+            aria-label="Anterior"
+            className="glass grid size-11 cursor-pointer place-items-center rounded-full text-midnight transition-all duration-300 active:scale-90 disabled:cursor-default disabled:opacity-35"
+          >
+            <ChevronLeft className="size-5" aria-hidden />
+          </button>
+          <button
+            type="button"
+            onClick={() => step(1)}
+            disabled={edge.end}
+            aria-label="Próximo"
+            className="grid size-11 cursor-pointer place-items-center rounded-full bg-midnight text-white shadow-soft transition-all duration-300 active:scale-90 disabled:cursor-default disabled:opacity-35"
+          >
+            <ChevronRight className="size-5" aria-hidden />
+          </button>
         </div>
       )}
     </div>

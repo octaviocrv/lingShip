@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { Carousel, GRID_LG } from "@/components/ui/carousel";
+import { Carousel } from "@/components/ui/carousel";
+import { GRID_LG } from "@/components/ui/carousel-grid";
 import { ActionButton, Container, LinkButton, SectionHeading, Tag } from "@/components/ui/primitives";
 import { cn } from "@/lib/cn";
-import { planos, planosSection } from "@/content/planos";
+import { planos, planosSection } from "@/features/marketing/content/planos";
 
 export function Planos() {
   return (

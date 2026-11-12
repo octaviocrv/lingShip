@@ -1,7 +1,7 @@
-import { MetricItem } from "@/components/effects/metric-item";
-import { PeopleAssemble } from "@/components/effects/people-assemble";
+import { MetricItem } from "@/features/marketing/components/effects/metric-item";
+import { PeopleAssemble } from "@/features/marketing/components/effects/people-assemble";
 import { Container, Eyebrow } from "@/components/ui/primitives";
-import { metricas, metricasSection } from "@/content/metricas";
+import { metricas, metricasSection } from "@/features/marketing/content/metricas";
 
 /**
  * Faixa de números logo abaixo do hero: título centralizado, o grupo de pessoas (que se monta

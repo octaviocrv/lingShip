@@ -36,7 +36,7 @@ export const planos: Plano[] = [
     price: "R$34,99",
     cta: "Comprar acesso",
     photo: {
-      src: "/fotos/planos/materiais-exclusivos.jpg",
+      src: "/images/site/planos/materiais-exclusivos.jpg",
       alt: "Pessoa estudando no notebook com ícones de materiais digitais",
     },
   },
@@ -49,7 +49,7 @@ export const planos: Plano[] = [
     price: "R$150,00",
     cta: "Comprar acesso",
     photo: {
-      src: "/fotos/planos/cursos.jpg",
+      src: "/images/site/planos/cursos.jpg",
       alt: "Mesa de estudo com caderno, caneca e marcadores em uma sala de aula",
     },
   },
@@ -62,7 +62,7 @@ export const planos: Plano[] = [
     price: "R$200,00",
     cta: "Comprar acesso",
     photo: {
-      src: "/fotos/planos/pacote-conversacao.jpg",
+      src: "/images/site/planos/pacote-conversacao.jpg",
       alt: "Estudante com fone de ouvido sorrindo durante uma conversa online",
     },
   },
@@ -75,7 +75,7 @@ export const planos: Plano[] = [
     price: "R$400,00",
     cta: "Comprar acesso",
     photo: {
-      src: "/fotos/planos/mentoria-individual.jpg",
+      src: "/images/site/planos/mentoria-individual.jpg",
       alt: "Professora conversando com um estudante em uma mesa de atendimento",
     },
   },

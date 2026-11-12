@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Carousel, GRID_LG } from "@/components/ui/carousel";
+import { Carousel } from "@/components/ui/carousel";
+import { GRID_LG } from "@/components/ui/carousel-grid";
 import { Container, IconBadge, SectionHeading } from "@/components/ui/primitives";
-import { categorias, desafios, desafiosSection } from "@/content/desafios";
+import { categorias, desafios, desafiosSection } from "@/features/marketing/content/desafios";
 import { cn } from "@/lib/cn";
 
 type Filtro = (typeof categorias)[number];

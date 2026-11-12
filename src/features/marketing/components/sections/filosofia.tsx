@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { Check, FileText } from "lucide-react";
-import { Carousel, GRID_LG } from "@/components/ui/carousel";
+import { Carousel } from "@/components/ui/carousel";
+import { GRID_LG } from "@/components/ui/carousel-grid";
 import { ActionButton, Container, Eyebrow, IconBadge, LinkButton } from "@/components/ui/primitives";
-import { baseTitle, filosofiaSection, formacao } from "@/content/filosofia";
+import { baseTitle, filosofiaSection, formacao } from "@/features/marketing/content/filosofia";
 import { cn } from "@/lib/cn";
 
 /** "Minha filosofia sobre educação" + formação da Vanessa (âncora "Sobre" do menu). */

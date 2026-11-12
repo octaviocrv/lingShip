@@ -1,14 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ArrowRight, LogIn } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { LinkButton } from "@/components/ui/primitives";
-import { mobileNavigation, navigation } from "@/config/navigation";
+import { mobileNavigation, navigation, studentAccess } from "@/features/marketing/config/navigation";
 import { cn } from "@/lib/cn";
 
 /**
  * Cabeçalho fixo, como no modelo do hero: logo à esquerda, menu no centro e, à direita,
  * o botão branco "Fale comigo" e o laranja "Quero assinar". Marca a seção visível no menu.
+ *
+ * Acesso de alunos ("Já é aluno? Acessar plataforma"): no desktop, numa faixa fina acima da
+ * linha principal (que não tem espaço sobrando), visível no topo da página e recolhida ao
+ * rolar; no celular, dentro do menu.
  */
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -60,6 +65,25 @@ export function SiteHeader() {
           "max-lg:rounded-b-[1.75rem] max-lg:border-transparent max-lg:bg-snow/80 max-lg:shadow-[0_16px_36px_-22px_rgb(43_33_64/0.45)] max-lg:backdrop-blur-md",
         )}
       >
+        <div
+          className={cn(
+            "hidden overflow-hidden transition-[height,opacity] duration-500 ease-out lg:block",
+            scrolled || open ? "h-0 opacity-0" : "h-9 opacity-100",
+          )}
+          inert={scrolled || open}
+        >
+          <div className="mx-auto flex h-9 max-w-[1280px] items-center justify-end gap-2 border-b border-line/70 px-10 text-[0.74rem] 2xl:px-12">
+            <span className="text-ink/70">{studentAccess.question}</span>
+            <a
+              href={studentAccess.href}
+              className="group inline-flex items-center gap-1.5 font-semibold text-purple transition-colors hover:text-purple-deep"
+            >
+              {studentAccess.label}
+              <ArrowRight aria-hidden className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+            </a>
+          </div>
+        </div>
+
         <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between gap-4 px-6 sm:px-8 lg:h-[84px] lg:gap-8 lg:px-10 2xl:px-12">
           <a href="#inicio" aria-label="Lingship, voltar ao início" onClick={() => setOpen(false)} className="shrink-0">
             <Logo />
@@ -172,9 +196,18 @@ export function SiteHeader() {
               </li>
             ))}
           </ul>
-          <LinkButton href="#planos" size="lg" onClick={() => setOpen(false)}>
-            Quero assinar
-          </LinkButton>
+          <div className="flex flex-col gap-3">
+            <LinkButton href="#planos" size="lg" onClick={() => setOpen(false)}>
+              Quero assinar
+            </LinkButton>
+            <a
+              href={studentAccess.href}
+              className="flex items-center justify-center gap-2 rounded-full py-2 text-[0.88rem] text-ink/75"
+            >
+              <LogIn aria-hidden className="size-4 text-purple" />
+              {studentAccess.question} <span className="font-semibold text-purple">{studentAccess.label}</span>
+            </a>
+          </div>
         </nav>
       </div>
     </>

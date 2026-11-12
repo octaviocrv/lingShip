@@ -1,8 +1,9 @@
 import { Presentation, Quote } from "lucide-react";
-import { Carousel, GRID_LG } from "@/components/ui/carousel";
+import { Carousel } from "@/components/ui/carousel";
+import { GRID_LG } from "@/components/ui/carousel-grid";
 import { Container, IconBadge, Initials, LinkButton, SectionHeading } from "@/components/ui/primitives";
 import { cn } from "@/lib/cn";
-import { apresentacoes, comunidadeSection, depoimentos } from "@/content/comunidade";
+import { apresentacoes, comunidadeSection, depoimentos } from "@/features/marketing/content/comunidade";
 
 /** "Comunidade viva": apresentações (faixa que desliza) + "Vozes da comunidade". */
 export function Comunidade() {
@@ -16,13 +17,14 @@ export function Comunidade() {
         />
 
         {/* Apresentações: desliza na horizontal ("Deslize para ver algumas apresentações") */}
-        {/* no desktop continua a faixa que desliza (3 por vez); no celular ganha pontos e setas */}
+        {/* tablet e desktop: faixa com cartões inteiros (2 por vez no tablet, 3 no desktop) e setas à direita; celular: carrossel com pontos e setas */}
         <Carousel
           label="Apresentações da comunidade"
           reveal="block"
           className="mt-10 lg:mt-14"
-          trackClassName="lg:gap-5 lg:pb-4 lg:pt-0"
-          slideClassName="lg:w-[calc((100%-2.5rem)/3)] lg:snap-start"
+          desktopArrows
+          trackClassName="sm:gap-5 sm:pb-4 sm:pt-1"
+          slideClassName="sm:w-[calc((100%-1.25rem)/2)] sm:snap-start lg:w-[calc((100%-2.5rem)/3)]"
         >
           {apresentacoes.map((pessoa) => (
             <div key={pessoa.name} className="glass flex h-full flex-col rounded-card p-7">

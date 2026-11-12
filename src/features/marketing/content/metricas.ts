@@ -8,9 +8,9 @@ export const metricasSection = {
   title: "Uma comunidade que cresce falando.",
   // Uma imagem por pessoa (mesmo tamanho): geradas do recorte pessoas-se-divertindo-semfundo.
   people: [
-    { src: "/fotos/pessoa-1.webp" },
-    { src: "/fotos/pessoa-2.webp" },
-    { src: "/fotos/pessoa-3.webp" },
+    { src: "/images/site/pessoa-1.webp" },
+    { src: "/images/site/pessoa-2.webp" },
+    { src: "/images/site/pessoa-3.webp" },
   ] as [{ src: string }, { src: string }, { src: string }],
   photo: {
     alt: "Grupo de estudantes da comunidade Lingship sorrindo e se divertindo juntos",

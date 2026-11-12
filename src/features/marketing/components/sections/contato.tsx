@@ -1,6 +1,6 @@
 import { Mail, Mic } from "lucide-react";
 import { ActionButton, Container, Eyebrow } from "@/components/ui/primitives";
-import { contatoForm, contatoSection } from "@/content/contato";
+import { contatoForm, contatoSection } from "@/features/marketing/content/contato";
 
 const fieldClass =
   "mt-2 w-full rounded-full border border-line bg-white/75 px-5 py-3 text-[0.92rem] text-ink outline-none transition-colors placeholder:text-muted/60 focus:border-purple/50 focus:bg-white";

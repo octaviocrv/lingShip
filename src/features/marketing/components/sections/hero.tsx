@@ -3,8 +3,8 @@ import Image from "next/image";
 import { Play } from "lucide-react";
 import { Container, Eyebrow, LinkButton } from "@/components/ui/primitives";
 import { siteConfig } from "@/config/site";
-import { ExpressionCard } from "@/components/effects/expression-card";
-import { hero, heroEntry, heroExpressions, heroFloating } from "@/content/hero";
+import { ExpressionCard } from "@/features/marketing/components/effects/expression-card";
+import { hero, heroEntry, heroExpressions, heroFloating } from "@/features/marketing/content/hero";
 
 /**
  * Hero no layout do modelo de referência: bloco lilás-rosado com curva embaixo, título em duas
@@ -16,7 +16,7 @@ export function Hero() {
   return (
     <section id="inicio" className="relative">
       {/* Bloco colorido com a curva no rodapé */}
-      <div className="relative overflow-hidden lg:flex lg:min-h-[100svh] lg:flex-col lg:justify-center bg-[linear-gradient(160deg,var(--color-lilac)_0%,var(--color-snow)_48%,var(--color-blush)_100%)] pt-[72px] [border-radius:0_0_50%_50%/0_0_40px_40px] sm:[border-radius:0_0_50%_50%/0_0_72px_72px] lg:pt-[84px] lg:[border-radius:0_0_50%_50%/0_0_90px_90px]">
+      <div className="relative overflow-hidden lg:flex lg:min-h-[100svh] lg:flex-col lg:justify-center bg-[linear-gradient(160deg,var(--color-lilac)_0%,var(--color-snow)_48%,var(--color-blush)_100%)] pt-[72px] [border-radius:0_0_50%_50%/0_0_40px_40px] sm:[border-radius:0_0_50%_50%/0_0_72px_72px] lg:pt-[120px] lg:[border-radius:0_0_50%_50%/0_0_90px_90px]">
         {/* manchas suaves de laranja e roxo, as cores da logo */}
         <div
           aria-hidden

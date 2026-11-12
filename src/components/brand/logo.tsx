@@ -6,17 +6,25 @@ import { cn } from "@/lib/cn";
  * Quadrado arredondado grafite (ou roxo, sobre fundo escuro), L serifado creme e aspas laranja.
  * Desenhado em SVG com a Playfair Display do site; trocar pelo arquivo final quando houver.
  */
-export function LogoMark({ tone = "dark", className }: { tone?: "dark" | "light"; className?: string }) {
+export function LogoMark({
+  tone = "dark",
+  className,
+}: {
+  /** "dark": grafite (padrão). "light": roxo, para fundo escuro. "snow": lilás claro com L grafite, sobre foto. */
+  tone?: "dark" | "light" | "snow";
+  className?: string;
+}) {
+  const rect = { dark: "fill-midnight", light: "fill-purple", snow: "fill-[#f0e8fb]" }[tone];
   return (
     <svg viewBox="0 0 64 64" aria-hidden className={cn("shrink-0", className)}>
-      <rect width="64" height="64" rx="18" className={tone === "light" ? "fill-purple" : "fill-midnight"} />
+      <rect width="64" height="64" rx="18" className={rect} />
       <text
         x="27"
         y="50"
         textAnchor="middle"
         fontSize="46"
         fontWeight="600"
-        className="fill-snow"
+        className={tone === "snow" ? "fill-ink-deep" : "fill-snow"}
         style={{ fontFamily: "var(--font-logo)" }}
       >
         L

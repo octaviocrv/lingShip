@@ -213,6 +213,17 @@ export const lofi = {
     sfxGain.gain.value = 0;
     window.setTimeout(() => !playing && window.clearInterval(timer), 900);
   },
+  /**
+   * Abaixa a música (sem desligar o som do site) enquanto outro áudio toca, como o vídeo do
+   * popup de materiais; `false` devolve o volume. O botão de som continua como estava.
+   */
+  duck(on: boolean) {
+    if (!ctx || !playing) return;
+    const t = ctx.currentTime;
+    musicGain.gain.cancelScheduledValues(t);
+    musicGain.gain.setValueAtTime(musicGain.gain.value, t);
+    musicGain.gain.linearRampToValueAtTime(on ? 0.0001 : MUSIC_VOLUME, t + (on ? 0.6 : 1.5));
+  },
   /** "tic" macio de botão */
   click() {
     if (!ctx || !playing) return;

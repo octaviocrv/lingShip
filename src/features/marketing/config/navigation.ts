@@ -1,3 +1,5 @@
+import { routes } from "@/config/routes";
+
 /** Menu do topo no desktop (rótulos curtos, como no protótipo). */
 export const navigation = [
   { label: "Início", href: "#inicio" },
@@ -32,3 +34,10 @@ export const footerNavigation = [
   { label: "Sobre a Lingship", href: "#sobre" },
   { label: "Perguntas frequentes", href: "#duvidas" },
 ] as const;
+
+/** Acesso de quem já é aluno: leva para o login da plataforma. */
+export const studentAccess = {
+  question: "Já é aluno?",
+  label: "Acessar plataforma",
+  href: routes.auth.login,
+} as const;

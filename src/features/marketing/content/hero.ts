@@ -57,7 +57,7 @@ export const hero = {
     { icon: Presentation, label: "Palco dos estudantes" },
   ] satisfies { icon: LucideIcon; label: string }[],
   photo: {
-    src: "/fotos/vanessa-hero-cafe.jpg",
+    src: "/images/site/vanessa-hero-cafe.jpg",
     alt: "Vanessa Mendes, criadora da Lingship, sorrindo com uma xícara de café e o caderno de plano de aula aberto na mesa",
   },
 };

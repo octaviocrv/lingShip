@@ -1,8 +1,8 @@
 import { Logo } from "@/components/brand/logo";
 import { Container } from "@/components/ui/primitives";
-import { footerNavigation } from "@/config/navigation";
+import { footerNavigation } from "@/features/marketing/config/navigation";
 import { siteConfig } from "@/config/site";
-import { footerContact } from "@/content/contato";
+import { footerContact } from "@/features/marketing/content/contato";
 
 export function SiteFooter() {
   return (

@@ -2,10 +2,12 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import { Layers, Search, SearchX } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Layers, MessagesSquare, Search, SearchX } from "lucide-react";
+import { routes } from "@/config/routes";
 import { cn } from "@/lib/cn";
-import { publishedConversations, series, situations, type SituationId } from "../content/catalog";
-import { student } from "../content/student";
+import { publishedConversations, series, situationLabel, situations, type SituationId } from "../content/catalog";
+import { situationPrompts, student } from "../content/student";
 import { ConversationCard } from "../components/conversation-card";
 import { Card, PageHeader } from "../components/ui";
 
@@ -86,6 +88,31 @@ export function Catalog({ initialQuery = "", initialSituation }: { initialQuery?
           </label>
         </div>
       </Card>
+
+      {/* Entrada pela situação (seção IV do documento de direção) */}
+      {!query && situation === "todas" && !activeSeries && !freeOnly && (
+        <section aria-labelledby="situacao-title" className="mb-8">
+          <h2 id="situacao-title" className="mb-3 flex items-center gap-2 font-sans text-[0.95rem] font-semibold text-midnight">
+            <MessagesSquare aria-hidden className="size-4 text-purple" />
+            O que acontece com você quando tenta usar inglês?
+          </h2>
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {situationPrompts.map((p) => (
+              <Link
+                key={p.text}
+                href={routes.platform.student.conversation(p.conversation)}
+                className="group flex items-center justify-between gap-3 rounded-tile bg-card px-4 py-3.5 shadow-card transition hover:ring-2 hover:ring-purple/15"
+              >
+                <span>
+                  <span className="block text-[0.9rem] font-semibold text-midnight">“{p.text}”</span>
+                  <span className="mt-0.5 block text-[0.74rem] text-muted">{situationLabel(p.situation)}</span>
+                </span>
+                <ArrowRight aria-hidden className="size-4 shrink-0 text-muted transition group-hover:translate-x-0.5 group-hover:text-purple" />
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Séries: perguntas que se conectam, sem impor currículo */}
       <section aria-labelledby="series-title" className="mb-8">

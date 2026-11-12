@@ -57,6 +57,25 @@
   --shadow-soft: 0 22px 70px rgb(43 33 64 / 0.1);
   --shadow-button: 0 16px 36px rgb(249 115 22 / 0.28);
 
+  /*
+   * Plataforma (área do aluno e painel da professora).
+   * Mesma paleta acima; aqui só o que é próprio dos painéis. Ajustar aqui quando a
+   * identidade visual for definida: as telas da plataforma só usam estes nomes.
+   */
+  --color-canvas: #f6f3f9; /* fundo das áreas logadas (lilás quase cinza) */
+  --color-card: #ffffff; /* cards */
+  --color-hairline: #eee8f3; /* divisórias internas dos cards */
+  --color-success: #17805a; /* alta, pago, publicado (sempre com ícone + rótulo) */
+  --color-success-soft: #e4f4ed;
+  --color-warning: #a8530a; /* em revisão, pendente */
+  --color-warning-soft: #fdf0e2;
+  --color-chart: #6d3fc0; /* série única dos gráficos (= roxo da marca) */
+  --color-chart-soft: #ece4f8; /* trilho das barras */
+  --radius-tile: 0.875rem; /* ícones em caixa, campos, botões quadrados */
+  --radius-box: 1.375rem; /* cards dos painéis */
+  --shadow-card: 0 1px 2px rgb(43 33 64 / 0.04), 0 12px 32px -14px rgb(43 33 64 / 0.14);
+  --shadow-card-hover: 0 1px 2px rgb(43 33 64 / 0.05), 0 18px 40px -14px rgb(43 33 64 / 0.22);
+
   /* Movimento */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --animate-float: float 6s ease-in-out infinite;

@@ -5,15 +5,42 @@
  * `planned` são rotas previstas que ainda não existem: ficam aqui para orientar a evolução,
  * mas nenhum link deve apontar para elas antes de a página ser criada.
  */
+const student = "/plataforma/aluno";
+const teacher = "/plataforma/professora";
+
 export const routes = {
   home: "/",
   auth: {
     login: "/login",
   },
+  /** Plataforma (protótipo de demonstração, dados fictícios). */
+  platform: {
+    root: "/plataforma",
+    student: {
+      home: student,
+      conversations: `${student}/conversas`,
+      conversation: (slug: string) => `${student}/conversas/${slug}`,
+      courses: `${student}/cursos`,
+      course: (slug: string) => `${student}/cursos/${slug}`,
+      journey: `${student}/percurso`,
+      mentoring: `${student}/mentoria`,
+      purchases: `${student}/compras`,
+      settings: `${student}/configuracoes`,
+    },
+    teacher: {
+      home: teacher,
+      contents: `${teacher}/conteudos`,
+      newContent: `${teacher}/conteudos/novo`,
+      content: (slug: string) => `${teacher}/conteudos/${slug}`,
+      courses: `${teacher}/cursos`,
+      course: (slug: string) => `${teacher}/cursos/${slug}`,
+      students: `${teacher}/alunos`,
+      mentoring: `${teacher}/mentoria`,
+    },
+  },
   planned: {
     signUp: "/cadastro",
     forgotPassword: "/recuperar-senha",
-    platform: "/plataforma",
   },
 } as const;
 

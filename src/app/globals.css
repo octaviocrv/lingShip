@@ -15,6 +15,7 @@
   --color-midnight: #2b2140; /* fundo do L": títulos, rodapé, cards em destaque */
   --color-purple: #6d3fc0; /* roxo da marca: rótulos, links, ícones */
   --color-purple-deep: #4c2a93; /* hover do roxo */
+  --color-purple-ink: #3a0a86; /* roxo profundo: rótulos e links do login sobre fundo claro */
   --color-orange: #f97316; /* aspas da logo: botões (texto grafite) e destaques */
   --color-orange-hover: #ea580c;
   --color-orange-deep: #c2410c; /* laranja para texto sobre fundo claro */
@@ -31,6 +32,7 @@
   --color-surface: #f1eaf9; /* fundo de ícones e etiquetas */
 
   /* Texto */
+  --color-ink-deep: #150d2c; /* grafite quase preto: títulos e rótulos do login */
   --color-ink: #463a53; /* texto principal: entre o grafite da logo e o cinza arroxeado */
   --color-muted: #6f6479; /* texto de apoio */
   --color-line: rgb(43 33 64 / 0.12);
@@ -161,6 +163,153 @@
     linear-gradient(to right, transparent 2.1rem, rgb(249 115 22 / 0.45) 2.1rem, rgb(249 115 22 / 0.45) calc(2.1rem + 1px), transparent calc(2.1rem + 1px)),
     repeating-linear-gradient(to bottom, transparent 0 1.55rem, rgb(109 63 192 / 0.1) 1.55rem calc(1.55rem + 1px));
   border: 1px solid rgb(43 33 64 / 0.08);
+}
+
+/*
+ * Telas de acesso (login e, depois, cadastro e recuperação de senha): medidas fluidas.
+ *
+ * Tudo nasce de clamp(rem + vw): cresce com a tela e também com o zoom do navegador (a parte
+ * em rem acompanha o zoom), dentro de limites mínimo e máximo. Os valores do meio batem com a
+ * referência de 1672px de largura.
+ *   --auth-fs     corpo do formulário (17,5px na referência); alturas, raios e espaços do
+ *                 formulário são múltiplos dele, então tudo fica proporcional entre si
+ *   --auth-space  ritmo vertical: 1 normal, menor em telas baixas (notebooks de 768px, zoom)
+ *   --s           um passo vertical = --auth-fs x --auth-space
+ *   --panel-*     painel da foto: recuos e tipografia
+ */
+.auth-scale {
+  --auth-fs: clamp(0.9375rem, 0.55rem + 0.53vw, 1.2rem);
+  --auth-space: 1;
+  --s: calc(var(--auth-fs) * var(--auth-space));
+  --auth-gutter: clamp(1.5rem, 0.5rem + 3vw, 4.5rem);
+
+  --panel-pad-x: clamp(2rem, 0.5rem + 5.2vw, 7rem);
+  --panel-pad-top: clamp(2rem, 12svh, 7.5rem);
+  --panel-logo: clamp(2.75rem, 1rem + 2.9vw, 4.4rem);
+  --panel-brand: clamp(1.6rem, 0.6rem + 1.65vw, 2.6rem);
+  --panel-tagline: clamp(0.62rem, 0.3rem + 0.52vw, 0.95rem);
+  --panel-title: clamp(2rem, 0.55rem + 2.65vw, 3.6rem);
+  --panel-text: clamp(1rem, 0.55rem + 0.75vw, 1.45rem);
+}
+@media (max-height: 820px) {
+  .auth-scale {
+    --auth-space: 0.84;
+  }
+}
+@media (max-height: 700px) {
+  .auth-scale {
+    --auth-space: 0.7;
+  }
+}
+@media (max-height: 640px) {
+  .auth-scale {
+    --auth-space: 0.58;
+  }
+}
+
+/*
+ * Entrada das telas de acesso (sem JS, roda ao carregar). Cada peça recebe uma classe e o
+ * atraso em --d (ex.: class="auth-in [--d:400ms]"), formando a cascata.
+ *   auth-in       sobe saindo do desfoque
+ *   auth-line     traço que cresce da esquerda (auth-line-end cresce da direita)
+ *   auth-panel    painel de foto desliza para dentro
+ *   auth-photo    foto começa ampliada e mais escura e se acomoda
+ *   auth-fade     só aparece
+ */
+@keyframes auth-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+    filter: blur(6px);
+  }
+}
+@keyframes auth-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes auth-panel {
+  from {
+    opacity: 0;
+    transform: translate3d(-5%, 0, 0);
+  }
+}
+@keyframes auth-photo {
+  from {
+    transform: scale(1.1);
+    filter: brightness(0.6) saturate(0.85);
+  }
+}
+@keyframes auth-fade {
+  from {
+    opacity: 0;
+  }
+}
+.auth-in {
+  animation: auth-rise 0.95s var(--ease-out-expo) var(--d, 0ms) both;
+}
+.auth-line,
+.auth-line-end {
+  transform-origin: left center;
+  animation: auth-grow 0.9s var(--ease-out-expo) var(--d, 0ms) both;
+}
+.auth-line-end {
+  transform-origin: right center;
+}
+.auth-panel {
+  animation: auth-panel 1.15s var(--ease-out-expo) var(--d, 0ms) both;
+}
+.auth-photo {
+  animation: auth-photo 2.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms) both;
+}
+.auth-fade {
+  animation: auth-fade 1.4s ease var(--d, 0ms) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.auth-in, .auth-line, .auth-line-end, .auth-panel, .auth-photo, .auth-fade) {
+    animation: none;
+  }
+}
+
+/*
+ * Troca de página suave (ex.: "Acessar plataforma" no cabeçalho -> login): a página atual se
+ * dissolve e a nova surge. Usa a transição nativa entre documentos do navegador; onde não há
+ * suporte, a navegação segue normal.
+ */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root) {
+  animation: page-out 0.35s ease both;
+}
+::view-transition-new(root) {
+  animation: page-in 0.55s var(--ease-out-expo) both;
+}
+@keyframes page-out {
+  to {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+/* Borda direita curva do painel de foto do login, medida na referência */
+@utility clip-auth-curve {
+  clip-path: polygon(
+    0 0, 86.4% 0, 88.26% 2%, 89.94% 4%, 91.41% 6%, 92.73% 8%, 93.9% 10%, 94.95% 12%, 95.88% 14%,
+    96.69% 16%, 97.39% 18%, 98% 20%, 98.56% 22%, 99.03% 24%, 99.33% 26%, 99.56% 28%, 99.7% 30%,
+    100% 40%, 100% 70%, 99.93% 74%, 99.71% 78%, 99.5% 80%, 99.13% 82%, 98.59% 84%, 97.99% 86%,
+    97.26% 88%, 96.4% 90%, 95.35% 92%, 94.09% 94%, 92.66% 96%, 90.99% 98%, 89.1% 100%, 0 100%
+  );
 }
 
 /* Esconde a barra de rolagem nas faixas que deslizam na horizontal */

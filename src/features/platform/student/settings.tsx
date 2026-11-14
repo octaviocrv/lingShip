@@ -1,20 +1,21 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { Bell, CheckCircle2, Download, Globe2, ShieldCheck, Trash2, UserRound } from "lucide-react";
+import { Bell, CheckCircle2, CreditCard, Download, ShieldCheck, Trash2, UserRound } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { student } from "../content/student";
 import { Avatar, Btn, Card, CardHeader, PageHeader } from "../components/ui";
+import { UniverseQuiz } from "./components/universe-quiz";
 
 const inputClass =
   "h-12 w-full rounded-tile border border-hairline bg-snow/60 px-4 text-[0.9rem] text-ink outline-none transition focus:border-purple/40 focus:bg-card focus:shadow-[0_0_0_4px_rgb(109_63_192/0.1)]";
 
-const uses = ["Conversas do dia a dia", "Trabalho", "Viagens", "Leitura", "Estudos", "Filmes e séries"];
+const sections = ["Perfil", "Preferências", "Avisos", "Plano e pagamentos", "Privacidade"] as const;
 
 export function Settings() {
   const [saved, setSaved] = useState(false);
-  const [chosen, setChosen] = useState<string[]>(["Conversas do dia a dia", "Trabalho"]);
   const [notify, setNotify] = useState({ series: true, live: true, support: true, news: false });
+  const [section, setSection] = useState<(typeof sections)[number]>("Perfil");
 
   return (
     <>
@@ -35,8 +36,11 @@ export function Settings() {
         }
       />
 
-      <div className="grid gap-6 xl:grid-cols-2">
-        <Card>
+      <div role="tablist" aria-label="Seções de configurações" className="no-scrollbar mb-6 flex gap-2 overflow-x-auto pb-1">
+        {sections.map((item) => <button key={item} type="button" role="tab" aria-selected={section === item} onClick={() => setSection(item)} className={cn("h-10 shrink-0 cursor-pointer rounded-full px-4 text-[0.8rem] font-semibold transition", section === item ? "bg-midnight text-snow" : "bg-card text-ink shadow-card hover:bg-surface")}>{item}</button>)}
+      </div>
+
+      {section === "Perfil" && <Card>
           <CardHeader title="Perfil" icon={UserRound} />
           <div className="mb-6 flex items-center gap-4">
             <Avatar initials={student.initials} size="lg" />
@@ -62,48 +66,11 @@ export function Settings() {
               <input id="senha" type="password" defaultValue="demonstracao" className={inputClass} />
             </Labeled>
           </div>
-        </Card>
+      </Card>}
 
-        <Card>
-          <CardHeader title="Para que você usa inglês?" icon={Globe2} description="Ajuda a sugerir conversas mais próximas da sua vida." />
-          <div className="flex flex-wrap gap-2">
-            {uses.map((u) => {
-              const on = chosen.includes(u);
-              return (
-                <button
-                  key={u}
-                  type="button"
-                  aria-pressed={on}
-                  onClick={() => setChosen((prev) => (on ? prev.filter((x) => x !== u) : [...prev, u]))}
-                  className={cn(
-                    "h-10 cursor-pointer rounded-full border px-4 text-[0.84rem] font-medium transition-colors",
-                    on ? "border-purple bg-surface text-purple" : "border-hairline text-ink hover:border-purple/30",
-                  )}
-                >
-                  {u}
-                </button>
-              );
-            })}
-          </div>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            <Labeled label="Legendas dos vídeos" id="legenda">
-              <select id="legenda" className={inputClass} defaultValue="en">
-                <option value="en">Em inglês</option>
-                <option value="pt">Em português</option>
-                <option value="off">Desligadas</option>
-              </select>
-            </Labeled>
-            <Labeled label="Velocidade padrão" id="vel">
-              <select id="vel" className={inputClass} defaultValue="1">
-                <option value="0.75">0,75x</option>
-                <option value="1">1x</option>
-                <option value="1.25">1,25x</option>
-              </select>
-            </Labeled>
-          </div>
-        </Card>
+      {section === "Preferências" && <UniverseQuiz />}
 
-        <Card>
+      {section === "Avisos" && <Card>
           <CardHeader title="Avisos" icon={Bell} />
           <ul className="divide-y divide-hairline">
             <Toggle label="Nova conversa numa série que eu acompanho" on={notify.series} onChange={(v) => setNotify({ ...notify, series: v })} />
@@ -111,9 +78,19 @@ export function Settings() {
             <Toggle label="Resposta do suporte" on={notify.support} onChange={(v) => setNotify({ ...notify, support: v })} />
             <Toggle label="Novidades e lançamentos" on={notify.news} onChange={(v) => setNotify({ ...notify, news: v })} />
           </ul>
-        </Card>
+      </Card>}
 
-        <Card>
+      {section === "Plano e pagamentos" && <Card>
+          <CardHeader title="Seu plano" icon={CreditCard} description="Aqui você acompanha sua assinatura, pagamentos e recibos." />
+          <div className="rounded-tile bg-surface p-5">
+            <p className="text-[0.75rem] font-bold uppercase tracking-[0.12em] text-purple">Plano atual</p>
+            <p className="mt-2 font-serif text-[1.35rem] font-semibold text-midnight">Aulas particulares · 2x por semana</p>
+            <p className="mt-2 text-[0.84rem] leading-relaxed text-muted">Próxima renovação: 05 de dezembro de 2026. Estes dados são demonstrativos.</p>
+          </div>
+          <div className="mt-5 flex flex-wrap gap-2.5"><Btn variant="secondary" size="sm">Ver pagamentos</Btn><Btn variant="secondary" size="sm">Baixar recibo</Btn></div>
+      </Card>}
+
+      {section === "Privacidade" && <Card>
           <CardHeader title="Privacidade e dados" icon={ShieldCheck} />
           <p className="text-[0.88rem] leading-relaxed text-ink">
             Suas produções e anotações são visíveis só para você (e para a Vanessa, se você estiver na mentoria). Você pode baixar
@@ -129,8 +106,7 @@ export function Settings() {
               Pedir exclusão da conta
             </Btn>
           </div>
-        </Card>
-      </div>
+      </Card>}
     </>
   );
 }

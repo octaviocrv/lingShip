@@ -11,12 +11,14 @@ export function Topbar({
   homeHref,
   searchAction,
   searchPlaceholder,
+  showSearch = true,
   user,
   hasNotifications = true,
 }: {
   homeHref: string;
   searchAction: string;
   searchPlaceholder: string;
+  showSearch?: boolean;
   user: { name: string; role: string; initials?: string; photo?: string };
   hasNotifications?: boolean;
 }) {
@@ -26,7 +28,7 @@ export function Topbar({
         <Logo />
       </Link>
 
-      <form action={searchAction} role="search" className="hidden min-w-0 max-w-[460px] flex-1 md:block">
+      {showSearch && <form action={searchAction} role="search" className="hidden min-w-0 max-w-[460px] flex-1 md:block">
         <label className="flex h-12 items-center gap-3 rounded-full bg-card px-5 shadow-card ring-1 ring-transparent transition focus-within:ring-purple/30">
           <Search aria-hidden className="size-[18px] shrink-0 text-muted" />
           <span className="sr-only">Buscar</span>
@@ -38,7 +40,7 @@ export function Topbar({
           />
           <kbd className="hidden rounded-md bg-canvas px-1.5 py-0.5 text-[0.68rem] font-medium text-muted xl:block">Enter</kbd>
         </label>
-      </form>
+      </form>}
 
       <div className="ml-auto flex items-center gap-2 sm:gap-4">
         <button

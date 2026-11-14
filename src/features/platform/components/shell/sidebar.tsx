@@ -122,12 +122,14 @@ function ScrollTabs({ area }: { area: PlatformArea }) {
   );
 }
 
-/** Barra de abas do aluno no celular e tablet: 4 destinos de estudo + "Conta". */
+/** Barra de abas do aluno no celular e tablet: atalhos prioritários e uma folha para o restante. */
 function StudentTabBar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const { nav, secondary } = menus.student;
-  const accountActive = secondary.some((item) => isActive(pathname, item));
+  const mainItems = nav.slice(0, 4);
+  const moreItems = [...nav.slice(4), ...secondary];
+  const accountActive = moreItems.some((item) => isActive(pathname, item));
 
   // fecha a folha ao trocar de página
   const [lastPath, setLastPath] = useState(pathname);
@@ -150,16 +152,16 @@ function StudentTabBar() {
           <button type="button" aria-label="Fechar" onClick={() => setOpen(false)} className="absolute inset-0 bg-midnight/30" />
           <div
             role="dialog"
-            aria-label="Sua conta"
+            aria-label="Mais opções"
             className="absolute inset-x-3 bottom-[calc(4.75rem+env(safe-area-inset-bottom))] rounded-box bg-card p-3 shadow-card-hover"
           >
             <div className="mb-1 flex items-center justify-between px-3 py-1">
-              <p className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-muted">Sua conta</p>
+              <p className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-muted">Mais opções</p>
               <button type="button" aria-label="Fechar" onClick={() => setOpen(false)} className="grid size-8 place-items-center rounded-full text-muted hover:bg-canvas">
                 <X aria-hidden className="size-4" />
               </button>
             </div>
-            {secondary.map((item) => (
+            {moreItems.map((item) => (
               <NavLink key={item.label} item={item} active={isActive(pathname, item)} />
             ))}
           </div>
@@ -171,7 +173,7 @@ function StudentTabBar() {
         className="fixed inset-x-0 bottom-0 z-40 border-t border-hairline bg-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
       >
         <ul className="mx-auto grid h-[4.25rem] max-w-xl grid-cols-5">
-          {nav.map((item) => {
+          {mainItems.map((item) => {
             const active = isActive(pathname, item);
             const Icon = item.icon;
             return (
@@ -202,7 +204,7 @@ function StudentTabBar() {
               <span className={cn("grid h-7 w-12 place-items-center rounded-full transition-colors", (open || accountActive) && "bg-surface")}>
                 <UserRound aria-hidden className="size-[19px]" strokeWidth={1.9} />
               </span>
-              Conta
+              Mais
             </button>
           </li>
         </ul>

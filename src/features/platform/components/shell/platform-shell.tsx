@@ -13,6 +13,7 @@ export function PlatformShell({
   sidebarFooter,
   searchAction,
   searchPlaceholder,
+  showSearch,
   user,
   children,
 }: {
@@ -21,6 +22,7 @@ export function PlatformShell({
   sidebarFooter?: ReactNode;
   searchAction: string;
   searchPlaceholder: string;
+  showSearch?: boolean;
   user: { name: string; role: string; initials?: string; photo?: string };
   children: ReactNode;
 }) {
@@ -30,7 +32,7 @@ export function PlatformShell({
       {/* aluno: espaço para a barra de abas fixa embaixo no celular */}
       <div className={cn("min-w-0 flex-1 px-4 pb-16 sm:px-6 lg:px-10 2xl:px-14", area === "student" && "max-lg:pb-28")}>
         <div className="mx-auto max-w-[1360px]">
-          <Topbar homeHref={homeHref} searchAction={searchAction} searchPlaceholder={searchPlaceholder} user={user} />
+          <Topbar homeHref={homeHref} searchAction={searchAction} searchPlaceholder={searchPlaceholder} showSearch={showSearch} user={user} />
           <MobileNav area={area} />
           <main className="pt-2 lg:pt-4">{children}</main>
         </div>

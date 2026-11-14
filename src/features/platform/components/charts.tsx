@@ -214,3 +214,28 @@ export function MeterList({
     </ul>
   );
 }
+
+/** Rosca para mostrar como um total se distribui. A legenda traz todos os valores. */
+export function DonutChart({ items, label }: { items: { label: string; value: number; color: string }[]; label: string }) {
+  const total = items.reduce((sum, item) => sum + item.value, 0);
+  const radius = 42;
+  const circumference = 2 * Math.PI * radius;
+  return (
+    <div className="flex flex-wrap items-center gap-5">
+      <figure className="relative grid size-36 shrink-0 place-items-center" aria-label={label}>
+        <svg viewBox="0 0 120 120" className="size-full -rotate-90" role="img" aria-label={label}>
+          <circle cx="60" cy="60" r={radius} fill="none" stroke="var(--color-canvas)" strokeWidth="15" />
+          {items.map((item, index) => {
+            const length = (item.value / total) * circumference;
+            const offset = items.slice(0, index).reduce((sum, previous) => sum + (previous.value / total) * circumference, 0);
+            return <circle key={item.label} cx="60" cy="60" r={radius} fill="none" stroke={item.color} strokeWidth="15" strokeLinecap="butt" strokeDasharray={`${Math.max(0, length - 2)} ${circumference}`} strokeDashoffset={-offset} />;
+          })}
+        </svg>
+        <span className="absolute text-center"><strong className="block font-serif text-[1.35rem] leading-none text-midnight">{total}h</strong><span className="mt-1 block text-[0.64rem] font-semibold uppercase tracking-[0.08em] text-muted">prática</span></span>
+      </figure>
+      <ul className="min-w-44 flex-1 space-y-2.5">
+        {items.map((item) => <li key={item.label} className="flex items-center justify-between gap-3 text-[0.78rem]"><span className="flex items-center gap-2 text-ink"><span aria-hidden className="size-2.5 rounded-full" style={{ background: item.color }} />{item.label}</span><span className="font-semibold text-midnight">{Math.round((item.value / total) * 100)}%</span></li>)}
+      </ul>
+    </div>
+  );
+}

@@ -18,6 +18,11 @@ export const routes = {
     root: "/plataforma",
     student: {
       home: student,
+      classes: `${student}/aulas`,
+      exercises: `${student}/exercicios`,
+      exercise: (id: string) => `${student}/exercicios/${id}`,
+      materials: `${student}/materiais`,
+      explore: `${student}/explorar`,
       conversations: `${student}/conversas`,
       conversation: (slug: string) => `${student}/conversas/${slug}`,
       courses: `${student}/cursos`,

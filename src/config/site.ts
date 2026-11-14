@@ -12,5 +12,7 @@ export const siteConfig = {
     "Plataforma de aprendizagem de inglês criada por Vanessa Mendes: materiais para estudar no seu ritmo, comunidade para praticar e a professora como guia do processo.",
   locale: "pt_BR",
   email: "contato@lingship.com",
+  /** Preencher somente com números do WhatsApp da Vanessa, incluindo DDI e DDD. Ex.: 5531999999999 */
+  whatsappNumber: "",
   year: 2026,
 } as const;

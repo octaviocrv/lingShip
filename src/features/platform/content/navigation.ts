@@ -1,16 +1,19 @@
 import {
   BookOpen,
+  ClipboardList,
   CircleUserRound,
+  Compass,
   Globe,
   GraduationCap,
+  FolderOpen,
   House,
   LayoutDashboard,
   Library,
   MessagesSquare,
-  Receipt,
   Route,
   Settings,
   Users,
+  Video,
   type LucideIcon,
 } from "lucide-react";
 import { routes } from "@/config/routes";
@@ -35,14 +38,16 @@ const t = routes.platform.teacher;
  */
 export const studentNav: NavItem[] = [
   { label: "Início", href: s.home, icon: House, exact: true },
+  { label: "Minhas aulas", short: "Aulas", href: s.classes, icon: Video },
+  { label: "Exercícios", short: "Práticas", href: s.exercises, icon: ClipboardList },
+  { label: "Materiais", short: "Materiais", href: s.materials, icon: FolderOpen },
+  { label: "Explorar", short: "Explorar", href: s.explore, icon: Compass },
   { label: "Meus cursos", short: "Cursos", href: s.courses, icon: BookOpen },
   { label: "Conversas", href: s.conversations, icon: MessagesSquare },
   { label: "Meu percurso", short: "Percurso", href: s.journey, icon: Route },
 ];
 
 export const studentNavSecondary: NavItem[] = [
-  { label: "Mentoria", href: s.mentoring, icon: GraduationCap },
-  { label: "Compras", href: s.purchases, icon: Receipt },
   { label: "Configurações", href: s.settings, icon: Settings },
 ];
 
